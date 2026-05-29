@@ -1,6 +1,7 @@
 const MAX_LEVEL = 10;
 const QUESTIONS_PER_LEVEL = 5;
 const STORAGE_KEY = "manabi-tsuri-save-v1";
+const TEST_MODE = new URLSearchParams(location.search).get("test") === "1";
 
 const subjectInfo = {
   math: { label: "さんすう", icon: "+", progressKey: "math" },
@@ -163,6 +164,7 @@ const fishList = [
 
 let state = loadState();
 let activeSubject = "math";
+let selectedLevels = { math: 1, roma: 1, word: 1 };
 let quiz = null;
 let selectedChoice = "";
 let resetArmed = false;
@@ -211,6 +213,7 @@ function render() {
   renderStatus();
   renderHome();
   renderSubjectPicker();
+  renderLevelPicker();
   renderFishBook();
   document.getElementById("place-name").textContent = places[currentBestLevel() - 1];
 }
@@ -278,10 +281,25 @@ function renderSubjectPicker() {
     .map(([key, info]) => `
       <button class="subject-choice ${key === activeSubject ? "is-active" : ""}" data-subject="${key}">
         ${info.icon} ${info.label}
-        <span>れべる ${state.levels[key]}</span>
+        <span>いま れべる ${state.levels[key]}</span>
       </button>
     `)
     .join("");
+}
+
+function renderLevelPicker() {
+  const picker = document.getElementById("level-picker");
+  const currentMax = TEST_MODE ? MAX_LEVEL : state.levels[activeSubject];
+  picker.innerHTML = Array.from({ length: MAX_LEVEL }, (_, index) => {
+    const level = index + 1;
+    const locked = level > currentMax;
+    const active = level === selectedLevels[activeSubject];
+    return `
+      <button class="level-choice ${active ? "is-active" : ""} ${locked ? "is-locked" : ""}" data-level="${level}" ${locked ? "disabled" : ""}>
+        ${level}
+      </button>
+    `;
+  }).join("");
 }
 
 function setView(view) {
@@ -295,7 +313,9 @@ function setView(view) {
 function startQuiz(subject) {
   activeSubject = subject;
   selectedChoice = "";
-  const level = clampLevel(state.levels[subject]);
+  const max = TEST_MODE ? MAX_LEVEL : state.levels[subject];
+  selectedLevels[subject] = Math.min(clampLevel(selectedLevels[subject]), max);
+  const level = selectedLevels[subject];
   quiz = {
     subject,
     level,
@@ -305,7 +325,14 @@ function startQuiz(subject) {
     locked: false,
   };
   renderSubjectPicker();
+  renderLevelPicker();
   renderQuestion();
+}
+
+function selectLevel(level) {
+  const max = TEST_MODE ? MAX_LEVEL : state.levels[activeSubject];
+  selectedLevels[activeSubject] = Math.min(clampLevel(level), max);
+  startQuiz(activeSubject);
 }
 
 function buildQuestions(subject, level) {
@@ -483,7 +510,11 @@ function finishQuiz() {
   document.getElementById("answer-box").innerHTML = "";
   document.getElementById("question-box").textContent = `${quiz.correct}/5`;
   if (clear) {
-    if (state.levels[quiz.subject] < MAX_LEVEL) state.levels[quiz.subject] += 1;
+    const clearedLatestLevel = quiz.level === state.levels[quiz.subject];
+    if (clearedLatestLevel && state.levels[quiz.subject] < MAX_LEVEL) {
+      state.levels[quiz.subject] += 1;
+      selectedLevels[quiz.subject] = state.levels[quiz.subject];
+    }
     state.tickets += 1;
     feedback.textContent = "すごい！ぜんぶできた！つりけんをもらったよ。";
   } else {
@@ -630,6 +661,9 @@ document.addEventListener("click", (event) => {
   const subject = event.target.closest("[data-subject]");
   if (subject) startQuiz(subject.dataset.subject);
 
+  const level = event.target.closest("[data-level]");
+  if (level) selectLevel(Number(level.dataset.level));
+
   const choice = event.target.closest("[data-choice]");
   if (choice) {
     selectedChoice = choice.dataset.choice;
@@ -641,25 +675,32 @@ document.addEventListener("click", (event) => {
 document.getElementById("check-answer").addEventListener("click", checkAnswer);
 document.getElementById("next-question").addEventListener("click", nextQuestion);
 document.getElementById("fish-button").addEventListener("click", goFishing);
-document.getElementById("reset-button").addEventListener("click", () => {
-  const button = document.getElementById("reset-button");
+document.querySelectorAll(".reset-control").forEach((control) => control.addEventListener("click", () => {
+  const button = control;
   if (!resetArmed) {
     resetArmed = true;
-    button.textContent = "ほんとう？";
+    document.querySelectorAll(".reset-control").forEach((item) => {
+      item.textContent = "ほんとう？";
+    });
     setTimeout(() => {
       if (!resetArmed) return;
       resetArmed = false;
-      button.textContent = "さいしょから";
+      document.querySelectorAll(".reset-control").forEach((item) => {
+        item.textContent = "さいしょから";
+      });
     }, 2200);
     return;
   }
   resetArmed = false;
-  button.textContent = "さいしょから";
+  document.querySelectorAll(".reset-control").forEach((item) => {
+    item.textContent = "さいしょから";
+  });
   state = defaultState();
+  selectedLevels = { math: 1, roma: 1, word: 1 };
   saveState();
   startQuiz(activeSubject);
   render();
-});
+}));
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && document.getElementById("study-view").classList.contains("is-active")) {

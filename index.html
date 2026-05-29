@@ -71,12 +71,16 @@
         <div class="panel story-panel">
           <h2>きょうのぼうけん</h2>
           <p id="story-text">すきなもんだいをえらんで、ぜんぶせいかいをめざそう。</p>
-          <button class="primary" data-go="study">まなびにいく</button>
+          <div class="home-actions">
+            <button class="primary" data-go="study">まなびにいく</button>
+            <button class="danger reset-control">さいしょから</button>
+          </div>
         </div>
       </section>
 
       <section id="study-view" class="view">
         <div class="subject-picker" id="subject-picker"></div>
+        <div class="level-picker" id="level-picker" aria-label="れべるをえらぶ"></div>
         <div class="panel quiz-panel" id="quiz-panel">
           <div class="quiz-head">
             <div>
@@ -120,7 +124,7 @@
               <p class="eyebrow">さかなずかん</p>
               <h2>みつけたさかな</h2>
             </div>
-            <button id="reset-button" class="danger">さいしょから</button>
+            <button class="danger reset-control">さいしょから</button>
           </div>
           <div id="fish-book" class="fish-book"></div>
         </div>
