@@ -5,7 +5,7 @@ const STORAGE_KEY = "manabi-tsuri-save-v1";
 const subjectInfo = {
   math: { label: "さんすう", icon: "+", progressKey: "math" },
   roma: { label: "ローマじ", icon: "A", progressKey: "roma" },
-  word: { label: "ことば", icon: "あ", progressKey: "word" },
+  word: { label: "いきもの", icon: "い", progressKey: "word" },
 };
 
 const places = [
@@ -73,76 +73,76 @@ const romajiLevels = [
   [["きょうは つりに いく", "kyouha tsurini iku"], ["おおきな さかなを つる", "ookina sakanawo tsuru"], ["みんなで うみに いく", "minnade umini iku"], ["にじいろの さかな", "nijiiro no sakana"], ["また あした あそぼう", "mata ashita asobou"]],
 ];
 
-const wordLevels = [
+const creatureLevels = [
   [
-    qChoice("あ", ["あ", "め", "ぬ", "ね"], "あ"),
-    qChoice("い", ["こ", "い", "り", "に"], "い"),
-    qChoice("う", ["う", "つ", "し", "へ"], "う"),
-    qChoice("え", ["そ", "え", "て", "る"], "え"),
-    qChoice("お", ["お", "よ", "は", "ほ"], "お"),
+    qChoice("おなじ えを えらぼう", "さかな", ["さかな", "ねこ", "くるま", "ほし"], "さかな"),
+    qChoice("おなじ えを えらぼう", "かに", ["かに", "いぬ", "ふね", "はな"], "かに"),
+    qChoice("おなじ えを えらぼう", "かめ", ["かめ", "くつ", "そら", "いす"], "かめ"),
+    qChoice("おなじ えを えらぼう", "えび", ["えび", "かさ", "みず", "つき"], "えび"),
+    qChoice("おなじ えを えらぼう", "たこ", ["たこ", "やま", "ぱん", "あめ"], "たこ"),
   ],
   [
-    qChoice("さ か な", ["さかな", "なかさ", "かなさ", "さなか"], "さかな"),
-    qChoice("ね こ", ["こね", "ねこ", "けの", "ねけ"], "ねこ"),
-    qChoice("く も", ["もく", "くも", "こむ", "むこ"], "くも"),
-    qChoice("い ぬ", ["ぬい", "いぬ", "にう", "うに"], "いぬ"),
-    qChoice("そ ら", ["らそ", "そら", "さら", "そろ"], "そら"),
+    qChoice("みずの なかに いるのは？", "さかな", ["さかな", "うさぎ", "とり", "ねこ"], "さかな"),
+    qChoice("こうらが あるのは？", "かめ", ["かめ", "いぬ", "りんご", "くも"], "かめ"),
+    qChoice("はさみが あるのは？", "かに", ["かに", "ふね", "はな", "くるま"], "かに"),
+    qChoice("ながい からだの さかなは？", "うなぎ", ["うなぎ", "すいか", "いす", "ぼうし"], "うなぎ"),
+    qChoice("あしが たくさん あるのは？", "たこ", ["たこ", "ほし", "かさ", "やま"], "たこ"),
   ],
   [
-    qChoice("りんご の つぎ", ["ごりら", "さかな", "くるま", "ねこ"], "ごりら"),
-    qChoice("ねこ の つぎ", ["こま", "いぬ", "そら", "つき"], "こま"),
-    qChoice("くつ の つぎ", ["つみき", "さる", "たこ", "かさ"], "つみき"),
-    qChoice("いす の つぎ", ["すいか", "しま", "きつね", "めだか"], "すいか"),
-    qChoice("たこ の つぎ", ["こい", "いか", "かめ", "くま"], "こい"),
+    qChoice("さかなの なかまは どれ？", "なかま", ["こい", "ねこ", "くつ", "でんしゃ"], "こい"),
+    qChoice("みずべに いるのは どれ？", "みずべ", ["かえる", "えんぴつ", "くるま", "ぼうし"], "かえる"),
+    qChoice("うみの いきものは どれ？", "うみ", ["いるか", "うま", "にわとり", "くま"], "いるか"),
+    qChoice("かわに いる さかなは？", "かわ", ["あゆ", "ぞう", "ぱん", "つくえ"], "あゆ"),
+    qChoice("からだが かたいのは？", "から", ["かに", "ねずみ", "とり", "いぬ"], "かに"),
   ],
   [
-    qChoice("おおきい の はんたい", ["ちいさい", "あかい", "ながい", "たかい"], "ちいさい"),
-    qChoice("あつい の はんたい", ["さむい", "ひろい", "まるい", "はやい"], "さむい"),
-    qChoice("ながい の はんたい", ["みじかい", "からい", "つよい", "あおい"], "みじかい"),
-    qChoice("うえ の はんたい", ["した", "よこ", "まえ", "なか"], "した"),
-    qChoice("はやい の はんたい", ["おそい", "やすい", "あまい", "ほそい"], "おそい"),
+    qChoice("おおきい さかなは どれ？", "おおきい", ["くじら", "めだか", "あり", "かたつむり"], "くじら"),
+    qChoice("ちいさい さかなは どれ？", "ちいさい", ["めだか", "くじら", "ぞう", "うし"], "めだか"),
+    qChoice("はやく およぎそうなのは？", "はやい", ["まぐろ", "かめ", "かたつむり", "なまけもの"], "まぐろ"),
+    qChoice("ゆっくり うごきそうなのは？", "ゆっくり", ["かめ", "まぐろ", "いるか", "とびうお"], "かめ"),
+    qChoice("ながい からだは どれ？", "ながい", ["うなぎ", "ふぐ", "かに", "えび"], "うなぎ"),
   ],
   [
-    qChoice("りんご、みかん、ぶどう", ["くだもの", "のりもの", "いきもの", "どうぐ"], "くだもの"),
-    qChoice("いぬ、ねこ、うさぎ", ["いきもの", "たべもの", "いろ", "かず"], "いきもの"),
-    qChoice("あか、あお、きいろ", ["いろ", "さかな", "ふく", "ばしょ"], "いろ"),
-    qChoice("ふね、くるま、でんしゃ", ["のりもの", "くだもの", "からだ", "てんき"], "のりもの"),
-    qChoice("えんぴつ、けしごむ、のり", ["どうぐ", "うみ", "やさい", "からだ"], "どうぐ"),
+    qChoice("こい、めだか、あゆ", "なかまは？", ["さかな", "とり", "むし", "のりもの"], "さかな"),
+    qChoice("かに、えび、やどかり", "なかまは？", ["こうら", "くだもの", "ふく", "どうぐ"], "こうら"),
+    qChoice("かえる、かめ、さかな", "すきな ばしょは？", ["みずべ", "そら", "すなば", "へや"], "みずべ"),
+    qChoice("いるか、くじら、まぐろ", "いる ばしょは？", ["うみ", "やま", "まち", "そら"], "うみ"),
+    qChoice("あゆ、こい、めだか", "いる ばしょは？", ["かわ", "つくえ", "くも", "ほん"], "かわ"),
   ],
   [
-    qChoice("アイス", ["アイス", "イスア", "スアイ", "アイシ"], "アイス"),
-    qChoice("バナナ", ["ナバナ", "バナナ", "バナバ", "ナナバ"], "バナナ"),
-    qChoice("テレビ", ["テビレ", "ビテレ", "テレビ", "レテビ"], "テレビ"),
-    qChoice("カメラ", ["ラメカ", "カメラ", "メカラ", "カラメ"], "カメラ"),
-    qChoice("パン", ["パン", "ンパ", "バン", "パナ"], "パン"),
+    qChoice("しまもようの さかなは？", "しま", ["しましまうお", "まめさかな", "ながぐつ", "あきかん"], "しましまうお"),
+    qChoice("まるい さかなは？", "まるい", ["まるぷく", "あゆ", "かに", "えび"], "まるぷく"),
+    qChoice("ひかる さかなは？", "ひかる", ["きらきらマス", "ふぐ", "こい", "たこ"], "きらきらマス"),
+    qChoice("ながい さかなは？", "ながい", ["うなぎ", "ふぐ", "かに", "かめ"], "うなぎ"),
+    qChoice("とげが ありそうなのは？", "とげ", ["ふぐ", "めだか", "こい", "あゆ"], "ふぐ"),
   ],
   [
-    qChoice("さかな", ["🐟", "🚗", "🍎", "⭐"], "🐟"),
-    qChoice("くるま", ["🍙", "🚗", "🌙", "🐱"], "🚗"),
-    qChoice("ほし", ["⭐", "🐶", "🎒", "🍌"], "⭐"),
-    qChoice("ねこ", ["🛟", "🍓", "🐱", "🚢"], "🐱"),
-    qChoice("ふね", ["🚢", "☂️", "🌸", "🐟"], "🚢"),
+    qChoice("つりで つかうものは？", "どうぐ", ["つりざお", "まくら", "おさら", "くつした"], "つりざお"),
+    qChoice("さかなが たべるものは？", "えさ", ["えさ", "ぼうし", "ほん", "つみき"], "えさ"),
+    qChoice("さかなを いれるものは？", "いれもの", ["バケツ", "テレビ", "いす", "かさ"], "バケツ"),
+    qChoice("くらい ところで つかうものは？", "あかり", ["ランタン", "おにぎり", "くつ", "ふく"], "ランタン"),
+    qChoice("とおくを みるものは？", "みる", ["そうがんきょう", "えんぴつ", "はさみ", "のり"], "そうがんきょう"),
   ],
   [
-    qChoice("ねこが いすの うえに います", ["うえ", "した", "そと", "なか"], "うえ"),
-    qChoice("いぬが みずを のみます", ["みず", "パン", "あめ", "くつ"], "みず"),
-    qChoice("ぼくは うみに いきます", ["うみ", "やま", "まち", "そら"], "うみ"),
-    qChoice("あかい はなが さいた", ["あかい", "あおい", "しろい", "くろい"], "あかい"),
-    qChoice("さかなが ぴょんと はねた", ["さかな", "ねこ", "とり", "うし"], "さかな"),
+    qChoice("さかなは みずの なかを およぎます。どこを およぐ？", "よんで えらぼう", ["みず", "そら", "つち", "ひ"], "みず"),
+    qChoice("かには はさみを もちます。なにを もつ？", "よんで えらぼう", ["はさみ", "つばさ", "くつ", "ほん"], "はさみ"),
+    qChoice("かめは こうらを もちます。なにを もつ？", "よんで えらぼう", ["こうら", "つりざお", "はな", "パン"], "こうら"),
+    qChoice("あゆは かわに います。どこに いる？", "よんで えらぼう", ["かわ", "そら", "へや", "みち"], "かわ"),
+    qChoice("いるかは うみで はねます。どこで はねる？", "よんで えらぼう", ["うみ", "やま", "いえ", "くるま"], "うみ"),
   ],
   [
-    qChoice("つりざおを もって いく", ["つりざお", "まくら", "くつした", "おさら"], "つりざお"),
-    qChoice("あめが ふったら かさを さす", ["かさ", "ふね", "えさ", "はこ"], "かさ"),
-    qChoice("よるに ほしが ひかる", ["ほし", "はな", "いす", "みず"], "ほし"),
-    qChoice("おにぎりを たべた", ["おにぎり", "えんぴつ", "ぼうし", "さかな"], "おにぎり"),
-    qChoice("かわで さかなを みた", ["かわ", "そら", "へや", "みち"], "かわ"),
+    qChoice("めだかは ちいさな さかなです。どんな さかな？", "よんで えらぼう", ["ちいさい", "とても おおきい", "そらを とぶ", "からい"], "ちいさい"),
+    qChoice("ふぐは ぷくっと ふくらみます。どうなる？", "よんで えらぼう", ["ふくらむ", "なくなる", "ねむる", "ころがる"], "ふくらむ"),
+    qChoice("たこは あしが たくさん あります。なにが たくさん？", "よんで えらぼう", ["あし", "はね", "みみ", "つの"], "あし"),
+    qChoice("くじらは とても おおきいです。どんな いきもの？", "よんで えらぼう", ["おおきい", "ちいさい", "ほそい", "かるい"], "おおきい"),
+    qChoice("とびうおは みずの うえを とびます。どこを とぶ？", "よんで えらぼう", ["みずの うえ", "つちの なか", "へやの なか", "くもの なか"], "みずの うえ"),
   ],
   [
-    qChoice("あさ、ぼくは つりばへ いきました。なにを しに いった？", ["つり", "おひるね", "そうじ", "おえかき"], "つり"),
-    qChoice("さかなが うきの ちかくで はねました。どこで はねた？", ["うきの ちかく", "やまの うえ", "へやの なか", "くもの うえ"], "うきの ちかく"),
-    qChoice("あいぼうは えさを もって きました。なにを もって きた？", ["えさ", "くつ", "ほん", "かさ"], "えさ"),
-    qChoice("ゆうがた、そらが あかく なりました。いつのこと？", ["ゆうがた", "あさ", "ひる", "よる"], "ゆうがた"),
-    qChoice("にじいろの さかなを ずかんに のせました。なにに のせた？", ["ずかん", "ふく", "いす", "みず"], "ずかん"),
+    qChoice("あさ、いけで うきが ゆれました。さかなが えさを たべたようです。なにが ゆれた？", "よんで えらぼう", ["うき", "くつ", "ぼうし", "くも"], "うき"),
+    qChoice("かわの みずは つめたいです。あゆが すいすい およぎます。なにが およぐ？", "よんで えらぼう", ["あゆ", "ねこ", "とり", "うま"], "あゆ"),
+    qChoice("うみで おおきな くじらを みました。しおを ふきました。なにを みた？", "よんで えらぼう", ["くじら", "めだか", "かえる", "かに"], "くじら"),
+    qChoice("よるの つりばで ランタンを つけました。みずが きらきら しました。なにを つけた？", "よんで えらぼう", ["ランタン", "テレビ", "ぼうし", "つくえ"], "ランタン"),
+    qChoice("にじいろの さかなは、ずかんの さいごに のりました。なにに のった？", "よんで えらぼう", ["ずかん", "かばん", "くつ", "ふとん"], "ずかん"),
   ],
 ];
 
@@ -166,9 +166,11 @@ let activeSubject = "math";
 let quiz = null;
 let selectedChoice = "";
 let resetArmed = false;
+let fishingBusy = false;
+let pendingCatch = null;
 
-function qChoice(prompt, choices, answer) {
-  return { type: "choice", prompt, choices, answer };
+function qChoice(prompt, topic, choices, answer) {
+  return { type: "choice", prompt, topic, choices, answer };
 }
 
 function fish(id, name, rarity, color, minLevel, weight, junk = false) {
@@ -222,24 +224,30 @@ function renderAvatar() {
   const scale = 0.78 + math * 0.035;
   const elder = math === MAX_LEVEL && roma === MAX_LEVEL && word === MAX_LEVEL;
   avatar.style.transform = `translateX(-50%) scale(${scale})`;
+  const itemClass = roma >= 9 ? "item__head--star" : roma >= 7 ? "item__head--map" : roma >= 4 ? "item__head--net" : "item__head--bucket";
+  const bodyRadius = math >= 8 ? 14 : math >= 5 ? 18 : 24;
   avatar.innerHTML = `
     <div class="person" style="--outfit:${outfits[roma - 1]};--item:${itemColors[roma - 1]}">
-      <div class="hair" style="height:${elder ? 24 : 30 + math}px;background:${elder ? "#f7f7f7" : "#5b3a2b"}"></div>
+      <div class="hair" style="height:${elder ? 24 : 28 + math * 2}px;background:${elder ? "#f7f7f7" : "#5b3a2b"}"></div>
       <div class="head"></div>
       <div class="eye eye--l"></div>
       <div class="eye eye--r"></div>
       <div class="mouth"></div>
-      <div class="body"></div>
+      <div class="body" style="height:${70 + math * 3}px;border-radius:${bodyRadius}px ${bodyRadius}px 12px 12px"></div>
+      <div class="body-mark"></div>
+      <div class="level-badge">L${Math.max(math, roma)}</div>
       <div class="arm arm--l"></div>
       <div class="arm arm--r"></div>
       <div class="leg leg--l"></div>
       <div class="leg leg--r"></div>
-      <div class="item"></div>
+      <div class="item"><div class="item__head ${itemClass}"></div></div>
     </div>
   `;
   buddy.style.transform = `scale(${0.76 + word * 0.035})`;
   buddy.innerHTML = `
     <div class="buddy-creature" style="--buddy:${buddyColors[word - 1]}">
+      ${word >= 4 ? '<div class="buddy-fin"></div>' : ''}
+      ${word >= 7 ? '<div class="buddy-horn"></div>' : ''}
       <div class="buddy-eye buddy-eye--l"></div>
       <div class="buddy-eye buddy-eye--r"></div>
     </div>
@@ -302,8 +310,17 @@ function startQuiz(subject) {
 
 function buildQuestions(subject, level) {
   if (subject === "math") return buildMathQuestions(level);
-  if (subject === "roma") return romajiLevels[level - 1].map(([kana, roma]) => ({ type: "typing", prompt: kana, hint: level <= 5 ? roma : "", answer: roma }));
-  return wordLevels[level - 1];
+  if (subject === "roma") {
+    return romajiLevels[level - 1].map(([kana, roma]) => ({
+      type: "typing",
+      prompt: kana,
+      topic: kana.includes(" ") ? "スペースも いれよう" : "ローマじで うとう",
+      hint: level <= 5 ? roma : "",
+      answer: roma,
+      answers: romajiAnswers(roma),
+    }));
+  }
+  return creatureLevels[level - 1];
 }
 
 function buildMathQuestions(level) {
@@ -314,12 +331,71 @@ function buildMathQuestions(level) {
     () => add(8, 19, 1, 9, true),
     () => sub(11, 20, 1, 10),
     () => add(10, 89, 1, 9, true),
-    () => sub(20, 99, 1, 9),
-    () => add(10, 79, 10, 19, true),
-    () => sub(30, 99, 10, 29),
-    () => Math.random() > 0.5 ? add(100, 299, 10, 99, true) : sub(100, 299, 10, 99),
+    () => sub(20, 50, 1, 9),
+    () => add(10, 40, 10, 20, false),
+    () => sub(21, 60, 10, 20),
+    () => Math.random() > 0.5 ? add(20, 80, 1, 20, true) : sub(30, 80, 1, 20),
   ];
   return Array.from({ length: QUESTIONS_PER_LEVEL }, specs[level - 1]);
+}
+
+function romajiAnswers(base) {
+  const parts = base.split(" ");
+  const variants = parts.map(romajiWordVariants);
+  return combineVariants(variants).map(normalizeAnswer);
+}
+
+function romajiWordVariants(word) {
+  const map = {
+    tsu: ["tsu", "tu"],
+    shi: ["shi", "si"],
+    chi: ["chi", "ti"],
+    fu: ["fu", "hu"],
+    ji: ["ji", "zi"],
+    ja: ["ja", "zya"],
+    ju: ["ju", "zyu"],
+    jo: ["jo", "zyo"],
+    sha: ["sha", "sya"],
+    shu: ["shu", "syu"],
+    sho: ["sho", "syo"],
+    cha: ["cha", "tya"],
+    chu: ["chu", "tyu"],
+    cho: ["cho", "tyo"],
+    kyo: ["kyo", "kilyo"],
+    kou: ["kou", "koo"],
+    kyou: ["kyou", "kyoo"],
+    ou: ["ou", "oo"],
+    wo: ["wo"],
+  };
+  let variants = [word];
+  for (const [from, tos] of Object.entries(map)) {
+    const next = new Set(variants);
+    for (const current of variants) {
+      if (!current.includes(from)) continue;
+      for (const to of tos) next.add(current.split(from).join(to));
+    }
+    variants = [...next];
+  }
+  if (word.endsWith("n")) {
+    variants.push(`${word}n`);
+  }
+  return [...new Set(variants)];
+}
+
+function combineVariants(groups) {
+  return groups.reduce((acc, group) => {
+    const next = [];
+    for (const prefix of acc) {
+      for (const item of group) {
+        next.push(prefix ? `${prefix} ${item}` : item);
+      }
+    }
+    return next;
+  }, [""]);
+}
+
+function normalizeAnswer(value) {
+  return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 function rand(min, max) {
@@ -332,7 +408,7 @@ function add(aMin, aMax, bMin, bMax, carry) {
   do {
     a = rand(aMin, aMax);
     b = rand(bMin, bMax);
-  } while (!carry && a + b >= 10);
+  } while (!carry && (a % 10) + (b % 10) >= 10);
   return { type: "number", prompt: `${a} + ${b} = ?`, answer: String(a + b) };
 }
 
@@ -349,7 +425,10 @@ function renderQuestion() {
   document.getElementById("quiz-subtitle").textContent = subjectInfo[quiz.subject].label;
   document.getElementById("quiz-title").textContent = `れべる ${quiz.level}`;
   document.getElementById("question-count").textContent = quiz.index + 1;
-  document.getElementById("question-box").innerHTML = q.hint ? `${q.prompt}<br><small>${q.hint}</small>` : q.prompt;
+  const guide = q.type === "choice" ? q.prompt : q.topic || questionGuide(quiz.subject);
+  const prompt = q.type === "choice" && q.topic ? q.topic : q.prompt;
+  document.getElementById("question-guide").textContent = guide;
+  document.getElementById("question-box").innerHTML = q.hint ? `${prompt}<br><small>${q.hint}</small>` : prompt;
   document.getElementById("feedback").textContent = "";
   document.getElementById("check-answer").hidden = false;
   document.getElementById("next-question").hidden = true;
@@ -362,6 +441,12 @@ function renderQuestion() {
   }
 }
 
+function questionGuide(subject) {
+  if (subject === "math") return "こたえを すうじで いれよう";
+  if (subject === "roma") return "ローマじで うとう";
+  return "あうものを えらぼう";
+}
+
 function checkAnswer() {
   if (!quiz || quiz.locked) return;
   const q = quiz.questions[quiz.index];
@@ -372,7 +457,7 @@ function checkAnswer() {
     document.getElementById("feedback").textContent = "こたえをいれてね。";
     return;
   }
-  const ok = value === q.answer;
+  const ok = q.answers ? q.answers.includes(normalizeAnswer(value)) : value === q.answer;
   if (ok) quiz.correct += 1;
   quiz.locked = true;
   document.getElementById("feedback").textContent = ok ? "せいかい！" : "ちがうよ。こたえは " + q.answer;
@@ -423,17 +508,61 @@ function resultMessage(correct) {
 
 function goFishing() {
   const message = document.getElementById("fishing-message");
+  const button = document.getElementById("fish-button");
+  const stage = document.getElementById("fishing-stage");
+  if (pendingCatch) {
+    finishFishing(pendingCatch);
+    return;
+  }
+  if (fishingBusy) return;
   if (state.tickets <= 0) {
     message.textContent = "つりけんがないよ。まなびにいこう。";
     return;
   }
+  fishingBusy = true;
   state.tickets -= 1;
   const caught = pickFish();
+  saveState();
+  render();
+  stage.querySelector(".caught-fish")?.remove();
+  stage.querySelector(".splash")?.remove();
+  stage.classList.remove("is-rare");
+  message.textContent = "うきが ゆれてるよ...";
+  button.textContent = "まってね";
+  button.disabled = true;
+
+  setTimeout(() => {
+    stage.classList.add("is-biting");
+    const splash = document.createElement("div");
+    splash.className = "splash";
+    stage.appendChild(splash);
+    const rare = isRareFish(caught);
+    if (rare) stage.classList.add("is-rare");
+    message.textContent = rare ? "すごい ひきだ！ひっぱれ！" : "きた！ひっぱれ！";
+    button.textContent = "ひっぱる";
+    button.disabled = false;
+    pendingCatch = caught;
+  }, 900 + Math.random() * 700);
+}
+
+function finishFishing(caught) {
+  const message = document.getElementById("fishing-message");
+  const button = document.getElementById("fish-button");
+  const stage = document.getElementById("fishing-stage");
+  stage.classList.remove("is-biting");
+  stage.querySelector(".splash")?.remove();
   state.fish[caught.id] = (state.fish[caught.id] || 0) + 1;
-  message.textContent = `${caught.name} がつれた！`;
+  message.textContent = isRareFish(caught) ? `${caught.name} だ！やったね！` : `${caught.name} がつれた！`;
   showCaughtFish(caught);
   saveState();
   render();
+  button.textContent = "つる";
+  fishingBusy = false;
+  pendingCatch = null;
+}
+
+function isRareFish(item) {
+  return item.rarity === "レア" || item.rarity === "でんせつ";
 }
 
 function pickFish() {
@@ -452,7 +581,7 @@ function showCaughtFish(fishItem) {
   const stage = document.getElementById("fishing-stage");
   stage.querySelector(".caught-fish")?.remove();
   const wrap = document.createElement("div");
-  wrap.className = "caught-fish";
+  wrap.className = `caught-fish ${isRareFish(fishItem) ? "is-rare" : ""}`;
   wrap.innerHTML = fishSvg(fishItem);
   stage.appendChild(wrap);
 }
