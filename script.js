@@ -676,7 +676,7 @@ function fishSvg(item) {
 }
 
 document.addEventListener("click", (event) => {
-  if (!event.target.closest("#reset-button")) resetArmed = false;
+  if (!event.target.closest(".reset-control")) resetArmed = false;
 
   const tab = event.target.closest(".tab");
   if (tab) setView(tab.dataset.view);
@@ -715,7 +715,7 @@ document.querySelectorAll(".reset-control").forEach((control) => control.addEven
   if (!resetArmed) {
     resetArmed = true;
     document.querySelectorAll(".reset-control").forEach((item) => {
-      item.textContent = "ほんとう？";
+      item.textContent = "データをけしていいの？";
     });
     setTimeout(() => {
       if (!resetArmed) return;
@@ -732,6 +732,7 @@ document.querySelectorAll(".reset-control").forEach((control) => control.addEven
   });
   state = defaultState();
   selectedLevels = { math: 1, roma: 1, word: 1 };
+  quiz = null;
   saveState();
   startQuiz(activeSubject);
   render();
