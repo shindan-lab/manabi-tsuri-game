@@ -67,11 +67,11 @@ const romajiLevels = [
   [["ま", "ma"], ["や", "ya"], ["ら", "ra"], ["わ", "wa"], ["ん", "n"]],
   [["いぬ", "inu"], ["ねこ", "neko"], ["さかな", "sakana"], ["やま", "yama"], ["そら", "sora"]],
   [["くるま", "kuruma"], ["つみき", "tsumiki"], ["みかん", "mikan"], ["ひこうき", "hikouki"], ["おにぎり", "onigiri"]],
+  [["すいとう", "suitou"], ["えんぴつ", "enpitsu"], ["ともだち", "tomodachi"], ["たからばこ", "takarabako"], ["あさごはん", "asagohan"]],
+  [["あかちゃん", "akachan"], ["らっぱ", "rappa"], ["きって", "kitte"], ["でんしゃ", "densha"], ["きんぎょ", "kingyo"]],
   [["あさ", "asa"], ["うみ", "umi"], ["かさ", "kasa"], ["ほし", "hoshi"], ["ゆき", "yuki"]],
-  [["あおい そら", "aoi sora"], ["あかい はな", "akai hana"], ["しろい くも", "shiroi kumo"], ["おおきい いぬ", "ookii inu"], ["かわいい ねこ", "kawaii neko"]],
-  [["ぼくは つる", "bokuha tsuru"], ["さかなが いる", "sakanaga iru"], ["うみに いく", "umini iku"], ["えさを もつ", "esawo motsu"], ["ふねに のる", "funeni noru"]],
   [["すいか", "suika"], ["たいこ", "taiko"], ["らっぱ", "rappa"], ["きって", "kitte"], ["がっこう", "gakkou"]],
-  [["きょうは つりに いく", "kyouha tsurini iku"], ["おおきな さかなを つる", "ookina sakanawo tsuru"], ["みんなで うみに いく", "minnade umini iku"], ["にじいろの さかな", "nijiiro no sakana"], ["また あした あそぼう", "mata ashita asobou"]],
+  [["オーストラリア", "oosutoraria"], ["うんどうかい", "undoukai"], ["たんじょうび", "tanjoubi"], ["しょうがっこう", "shougakkou"], ["かいすいよく", "kaisuiyoku"]],
 ];
 
 const creatureLevels = [
@@ -341,8 +341,8 @@ function buildQuestions(subject, level) {
     return romajiLevels[level - 1].map(([kana, roma]) => ({
       type: "typing",
       prompt: kana,
-      topic: kana.includes(" ") ? "スペースも いれよう" : "ローマじで うとう",
-      hint: level <= 5 ? roma : "",
+      topic: "ローマじで うとう",
+      hint: level <= 7 ? roma : "",
       answer: roma,
       answers: romajiAnswers(roma),
     }));
@@ -388,9 +388,13 @@ function romajiWordVariants(word) {
     cha: ["cha", "tya"],
     chu: ["chu", "tyu"],
     cho: ["cho", "tyo"],
+    gyo: ["gyo", "gilyo"],
     kyo: ["kyo", "kilyo"],
+    ppa: ["ppa", "ltupa", "xtupa"],
+    tte: ["tte", "ltute", "xtute"],
     kou: ["kou", "koo"],
     kyou: ["kyou", "kyoo"],
+    shou: ["shou", "syou", "shoo", "syoo"],
     ou: ["ou", "oo"],
     wo: ["wo"],
   };
