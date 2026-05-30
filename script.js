@@ -88,18 +88,21 @@ const clockLevels = [
 ];
 
 const fishList = [
-  fish("pond_a", "まめさかな", "よくでる", "#7ec8ff", 1, 0.22),
-  fish("pond_b", "しましまうお", "よくでる", "#ffd166", 1, 0.18),
-  fish("river_a", "きらきらマス", "たまにでる", "#8be8c4", 3, 0.13),
-  fish("river_b", "あかひれ", "たまにでる", "#ff9f7d", 3, 0.11),
-  fish("lake_a", "まるぷく", "たまにでる", "#baffc9", 5, 0.1),
-  fish("lake_b", "みどりこい", "レア", "#52b788", 5, 0.07),
-  fish("sea_a", "そらいろタイ", "レア", "#5cc8ff", 7, 0.06),
-  fish("sea_b", "なみのこ", "レア", "#b69cff", 7, 0.05),
-  fish("deep_a", "ほしあんこう", "レア", "#fff176", 9, 0.04),
-  fish("legend_a", "にじいろキング", "でんせつ", "#f6a6c9", 10, 0.025),
-  fish("boot", "ながぐつ", "はずれ", "#9aa7ad", 1, 0.035, true),
-  fish("can", "あきかん", "はずれ", "#b8c1c7", 1, 0.025, true),
+  fish("medaka", "メダカ", "よくでる", "#7ec8ff", 1, 0.2),
+  fish("koi", "コイ", "よくでる", "#f4a261", 1, 0.18),
+  fish("aji", "アジ", "よくでる", "#9bd4d9", 2, 0.16),
+  fish("kingyo", "キンギョ", "たまにでる", "#ff7b54", 3, 0.11),
+  fish("yamame", "ヤマメ", "たまにでる", "#9fd7ca", 3, 0.1),
+  fish("nijimasu", "ニジマス", "たまにでる", "#b69cff", 4, 0.09),
+  fish("kasago", "カサゴ", "たまにでる", "#d95d39", 5, 0.08),
+  fish("rare_nijimasu", "きらきらニジマス", "レア", "#8be8c4", 5, 0.055),
+  fish("rare_ayu", "ぎんいろアユ", "レア", "#e8f7ff", 6, 0.05),
+  fish("rare_ishidai", "しましまイシダイ", "レア", "#d7d2c6", 7, 0.045),
+  fish("rare_tobiuo", "あおぞらトビウオ", "レア", "#5cc8ff", 8, 0.04),
+  fish("rare_kingyo", "こがねキンギョ", "レア", "#f6c445", 8, 0.035),
+  fish("legend_koi", "にじいろコイ", "でんせつ", "#f6a6c9", 9, 0.025),
+  fish("legend_tai", "おうごんタイ", "でんせつ", "#ffd166", 10, 0.02),
+  fish("legend_coelacanth", "まぼろしシーラカンス", "でんせつ", "#5f6caf", 10, 0.015),
 ];
 
 let state = loadState();
@@ -185,8 +188,8 @@ function shuffle(items) {
   return copy;
 }
 
-function fish(id, name, rarity, color, minLevel, weight, junk = false) {
-  return { id, name, rarity, color, minLevel, weight, junk };
+function fish(id, name, rarity, color, minLevel, weight) {
+  return { id, name, rarity, color, minLevel, weight };
 }
 
 function defaultState() {
@@ -671,12 +674,7 @@ function renderFishBook() {
 }
 
 function fishSvg(item) {
-  if (item.junk) {
-    return `<svg class="fish-svg" viewBox="0 0 160 90" role="img" aria-label="${item.name}">
-      <path d="M68 28h38l8 42H58z" fill="${item.color}" stroke="#344" stroke-width="5" />
-      <path d="M78 26c4-16 26-16 30 0" fill="none" stroke="#344" stroke-width="5" />
-    </svg>`;
-  }
+  const rare = isRareFish(item);
   return `<svg class="fish-svg" viewBox="0 0 180 95" role="img" aria-label="${item.name}">
     <path d="M18 48l34-24v48z" fill="${item.color}" stroke="#234" stroke-width="5" />
     <ellipse cx="98" cy="48" rx="58" ry="32" fill="${item.color}" stroke="#234" stroke-width="5" />
@@ -684,6 +682,7 @@ function fishSvg(item) {
     <circle cx="132" cy="40" r="5" fill="#182633" />
     <path d="M144 53q-12 10-25 0" fill="none" stroke="#234" stroke-width="4" stroke-linecap="round" />
     <path d="M68 34h32M62 48h44M70 62h30" stroke="rgba(255,255,255,.65)" stroke-width="5" stroke-linecap="round" />
+    ${rare ? '<path d="M92 12l8 14 15 2-11 10 3 15-15-7-14 7 3-15-11-10 15-2z" fill="#fff176" stroke="#234" stroke-width="3" />' : ''}
   </svg>`;
 }
 
