@@ -6,7 +6,7 @@ const TEST_MODE = new URLSearchParams(location.search).get("test") === "1";
 const subjectInfo = {
   math: { label: "さんすう", icon: "+", progressKey: "math" },
   roma: { label: "ローマじ", icon: "A", progressKey: "roma" },
-  word: { label: "いきもの", icon: "い", progressKey: "word" },
+  word: { label: "とけい", icon: "と", progressKey: "word" },
 };
 
 const places = [
@@ -74,77 +74,17 @@ const romajiLevels = [
   [["オーストラリア", "oosutoraria"], ["うんどうかい", "undoukai"], ["たんじょうび", "tanjoubi"], ["しょうがっこう", "shougakkou"], ["かいすいよく", "kaisuiyoku"]],
 ];
 
-const creatureLevels = [
-  [
-    qChoice("おなじ えを えらぼう", "さかな", ["さかな", "ねこ", "くるま", "ほし"], "さかな"),
-    qChoice("おなじ えを えらぼう", "かに", ["かに", "いぬ", "ふね", "はな"], "かに"),
-    qChoice("おなじ えを えらぼう", "かめ", ["かめ", "くつ", "そら", "いす"], "かめ"),
-    qChoice("おなじ えを えらぼう", "えび", ["えび", "かさ", "みず", "つき"], "えび"),
-    qChoice("おなじ えを えらぼう", "たこ", ["たこ", "やま", "ぱん", "あめ"], "たこ"),
-  ],
-  [
-    qChoice("みずの なかに いるのは？", "さかな", ["さかな", "うさぎ", "とり", "ねこ"], "さかな"),
-    qChoice("こうらが あるのは？", "かめ", ["かめ", "いぬ", "りんご", "くも"], "かめ"),
-    qChoice("はさみが あるのは？", "かに", ["かに", "ふね", "はな", "くるま"], "かに"),
-    qChoice("ながい からだの さかなは？", "うなぎ", ["うなぎ", "すいか", "いす", "ぼうし"], "うなぎ"),
-    qChoice("あしが たくさん あるのは？", "たこ", ["たこ", "ほし", "かさ", "やま"], "たこ"),
-  ],
-  [
-    qChoice("さかなの なかまは どれ？", "なかま", ["こい", "ねこ", "くつ", "でんしゃ"], "こい"),
-    qChoice("みずべに いるのは どれ？", "みずべ", ["かえる", "えんぴつ", "くるま", "ぼうし"], "かえる"),
-    qChoice("うみの いきものは どれ？", "うみ", ["いるか", "うま", "にわとり", "くま"], "いるか"),
-    qChoice("かわに いる さかなは？", "かわ", ["あゆ", "ぞう", "ぱん", "つくえ"], "あゆ"),
-    qChoice("からだが かたいのは？", "から", ["かに", "ねずみ", "とり", "いぬ"], "かに"),
-  ],
-  [
-    qChoice("おおきい さかなは どれ？", "おおきい", ["くじら", "めだか", "あり", "かたつむり"], "くじら"),
-    qChoice("ちいさい さかなは どれ？", "ちいさい", ["めだか", "くじら", "ぞう", "うし"], "めだか"),
-    qChoice("はやく およぎそうなのは？", "はやい", ["まぐろ", "かめ", "かたつむり", "なまけもの"], "まぐろ"),
-    qChoice("ゆっくり うごきそうなのは？", "ゆっくり", ["かめ", "まぐろ", "いるか", "とびうお"], "かめ"),
-    qChoice("ながい からだは どれ？", "ながい", ["うなぎ", "ふぐ", "かに", "えび"], "うなぎ"),
-  ],
-  [
-    qChoice("こい、めだか、あゆ", "なかまは？", ["さかな", "とり", "むし", "のりもの"], "さかな"),
-    qChoice("かに、えび、やどかり", "なかまは？", ["こうら", "くだもの", "ふく", "どうぐ"], "こうら"),
-    qChoice("かえる、かめ、さかな", "すきな ばしょは？", ["みずべ", "そら", "すなば", "へや"], "みずべ"),
-    qChoice("いるか、くじら、まぐろ", "いる ばしょは？", ["うみ", "やま", "まち", "そら"], "うみ"),
-    qChoice("あゆ、こい、めだか", "いる ばしょは？", ["かわ", "つくえ", "くも", "ほん"], "かわ"),
-  ],
-  [
-    qChoice("しまもようの さかなは？", "しま", ["しましまうお", "まめさかな", "ながぐつ", "あきかん"], "しましまうお"),
-    qChoice("まるい さかなは？", "まるい", ["まるぷく", "あゆ", "かに", "えび"], "まるぷく"),
-    qChoice("ひかる さかなは？", "ひかる", ["きらきらマス", "ふぐ", "こい", "たこ"], "きらきらマス"),
-    qChoice("ながい さかなは？", "ながい", ["うなぎ", "ふぐ", "かに", "かめ"], "うなぎ"),
-    qChoice("とげが ありそうなのは？", "とげ", ["ふぐ", "めだか", "こい", "あゆ"], "ふぐ"),
-  ],
-  [
-    qChoice("つりで つかうものは？", "どうぐ", ["つりざお", "まくら", "おさら", "くつした"], "つりざお"),
-    qChoice("さかなが たべるものは？", "えさ", ["えさ", "ぼうし", "ほん", "つみき"], "えさ"),
-    qChoice("さかなを いれるものは？", "いれもの", ["バケツ", "テレビ", "いす", "かさ"], "バケツ"),
-    qChoice("くらい ところで つかうものは？", "あかり", ["ランタン", "おにぎり", "くつ", "ふく"], "ランタン"),
-    qChoice("とおくを みるものは？", "みる", ["そうがんきょう", "えんぴつ", "はさみ", "のり"], "そうがんきょう"),
-  ],
-  [
-    qChoice("さかなは みずの なかを およぎます。どこを およぐ？", "よんで えらぼう", ["みず", "そら", "つち", "ひ"], "みず"),
-    qChoice("かには はさみを もちます。なにを もつ？", "よんで えらぼう", ["はさみ", "つばさ", "くつ", "ほん"], "はさみ"),
-    qChoice("かめは こうらを もちます。なにを もつ？", "よんで えらぼう", ["こうら", "つりざお", "はな", "パン"], "こうら"),
-    qChoice("あゆは かわに います。どこに いる？", "よんで えらぼう", ["かわ", "そら", "へや", "みち"], "かわ"),
-    qChoice("いるかは うみで はねます。どこで はねる？", "よんで えらぼう", ["うみ", "やま", "いえ", "くるま"], "うみ"),
-  ],
-  [
-    qChoice("めだかは ちいさな さかなです。どんな さかな？", "よんで えらぼう", ["ちいさい", "とても おおきい", "そらを とぶ", "からい"], "ちいさい"),
-    qChoice("ふぐは ぷくっと ふくらみます。どうなる？", "よんで えらぼう", ["ふくらむ", "なくなる", "ねむる", "ころがる"], "ふくらむ"),
-    qChoice("たこは あしが たくさん あります。なにが たくさん？", "よんで えらぼう", ["あし", "はね", "みみ", "つの"], "あし"),
-    qChoice("くじらは とても おおきいです。どんな いきもの？", "よんで えらぼう", ["おおきい", "ちいさい", "ほそい", "かるい"], "おおきい"),
-    qChoice("とびうおは みずの うえを とびます。どこを とぶ？", "よんで えらぼう", ["みずの うえ", "つちの なか", "へやの なか", "くもの なか"], "みずの うえ"),
-  ],
-  [
-    qChoice("あさ、いけで うきが ゆれました。さかなが えさを たべたようです。なにが ゆれた？", "よんで えらぼう", ["うき", "くつ", "ぼうし", "くも"], "うき"),
-    qChoice("かわの みずは つめたいです。あゆが すいすい およぎます。なにが およぐ？", "よんで えらぼう", ["あゆ", "ねこ", "とり", "うま"], "あゆ"),
-    qChoice("うみで おおきな くじらを みました。しおを ふきました。なにを みた？", "よんで えらぼう", ["くじら", "めだか", "かえる", "かに"], "くじら"),
-    qChoice("よるの つりばで ランタンを つけました。みずが きらきら しました。なにを つけた？", "よんで えらぼう", ["ランタン", "テレビ", "ぼうし", "つくえ"], "ランタン"),
-    qChoice("にじいろの さかなは、ずかんの さいごに のりました。なにに のった？", "よんで えらぼう", ["ずかん", "かばん", "くつ", "ふとん"], "ずかん"),
-  ],
+const clockLevels = [
+  [clockQ(1, 0), clockQ(2, 0), clockQ(3, 0), clockQ(4, 0), clockQ(5, 0)],
+  [clockQ(6, 0), clockQ(7, 0), clockQ(8, 0), clockQ(9, 0), clockQ(10, 0)],
+  [clockQ(1, 30), clockQ(2, 30), clockQ(3, 30), clockQ(4, 30), clockQ(5, 30)],
+  [clockQ(6, 30), clockQ(7, 30), clockQ(8, 30), clockQ(9, 30), clockQ(10, 30)],
+  [clockQ(1, 0, "つぎの じこくは？", 2, 0), clockQ(3, 0, "つぎの じこくは？", 4, 0), clockQ(5, 0, "つぎの じこくは？", 6, 0), clockQ(7, 0, "つぎの じこくは？", 8, 0), clockQ(9, 0, "つぎの じこくは？", 10, 0)],
+  [clockQ(1, 15), clockQ(2, 45), clockQ(4, 15), clockQ(5, 45), clockQ(7, 15)],
+  [clockQ(1, 5), clockQ(2, 10), clockQ(3, 20), clockQ(4, 25), clockQ(5, 55)],
+  [clockQ(8, 10), clockQ(9, 25), clockQ(10, 35), clockQ(11, 40), clockQ(12, 50)],
+  [clockQ(2, 0, "1じかん あとは？", 3, 0), clockQ(4, 30, "1じかん あとは？", 5, 30), clockQ(6, 15, "1じかん あとは？", 7, 15), clockQ(8, 45, "1じかん あとは？", 9, 45), clockQ(10, 20, "1じかん あとは？", 11, 20)],
+  [clockQ(6, 0, "あさの つりは？"), clockQ(12, 0, "おひるの つりは？"), clockQ(3, 30, "おやつの じかんは？"), clockQ(5, 0, "ゆうがたの つりは？"), clockQ(7, 30, "よるの じかんは？")],
 ];
 
 const fishList = [
@@ -173,6 +113,76 @@ let pendingCatch = null;
 
 function qChoice(prompt, topic, choices, answer) {
   return { type: "choice", prompt, topic, choices, answer };
+}
+
+function clockQ(hour, minute, prompt = "この とけいは？", answerHour = hour, answerMinute = minute) {
+  const answer = timeLabel(answerHour, answerMinute);
+  return {
+    type: "clock",
+    prompt,
+    topic: clockSvg(hour, minute),
+    choices: timeChoices(answerHour, answerMinute),
+    answer,
+  };
+}
+
+function timeLabel(hour, minute) {
+  if (minute === 0) return `${hour}じ`;
+  if (minute === 30) return `${hour}じはん`;
+  return `${hour}じ${minute}ふん`;
+}
+
+function timeChoices(hour, minute) {
+  const answer = timeLabel(hour, minute);
+  const choices = new Set([answer]);
+  const offsets = minute === 0 ? [1, 2, 3, -1, -2] : [5, 10, -5, -10, 15, -15];
+  for (const offset of offsets) {
+    if (choices.size >= 4) break;
+    if (minute === 0) {
+      choices.add(timeLabel(wrapHour(hour + offset), 0));
+    } else {
+      const total = (hour % 12) * 60 + minute + offset;
+      const nextHour = wrapHour(Math.floor(total / 60));
+      const nextMinute = ((total % 60) + 60) % 60;
+      choices.add(timeLabel(nextHour, nextMinute));
+    }
+  }
+  return shuffle([...choices]).slice(0, 4);
+}
+
+function wrapHour(hour) {
+  const wrapped = ((hour - 1) % 12 + 12) % 12 + 1;
+  return wrapped;
+}
+
+function clockSvg(hour, minute) {
+  const hourAngle = (hour % 12) * 30 + minute * 0.5;
+  const minuteAngle = minute * 6;
+  const marks = Array.from({ length: 12 }, (_, index) => {
+    const value = index + 1;
+    const angle = (value * 30 - 90) * Math.PI / 180;
+    const x = 100 + Math.cos(angle) * 72;
+    const y = 100 + Math.sin(angle) * 72;
+    return `<text x="${x}" y="${y + 6}" text-anchor="middle">${value}</text>`;
+  }).join("");
+  return `
+    <svg class="clock-face" viewBox="0 0 200 200" role="img" aria-label="とけい">
+      <circle cx="100" cy="100" r="88"></circle>
+      <circle cx="100" cy="100" r="5" class="clock-center"></circle>
+      <g class="clock-numbers">${marks}</g>
+      <line x1="100" y1="100" x2="100" y2="48" class="clock-hand clock-hand--hour" transform="rotate(${hourAngle} 100 100)"></line>
+      <line x1="100" y1="100" x2="100" y2="28" class="clock-hand clock-hand--minute" transform="rotate(${minuteAngle} 100 100)"></line>
+    </svg>
+  `;
+}
+
+function shuffle(items) {
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+  return copy;
 }
 
 function fish(id, name, rarity, color, minLevel, weight, junk = false) {
@@ -347,7 +357,7 @@ function buildQuestions(subject, level) {
       answers: romajiAnswers(roma),
     }));
   }
-  return creatureLevels[level - 1];
+  return clockLevels[level - 1];
 }
 
 function buildMathQuestions(level) {
@@ -456,8 +466,8 @@ function renderQuestion() {
   document.getElementById("quiz-subtitle").textContent = subjectInfo[quiz.subject].label;
   document.getElementById("quiz-title").textContent = `れべる ${quiz.level}`;
   document.getElementById("question-count").textContent = quiz.index + 1;
-  const guide = q.type === "choice" ? q.prompt : q.topic || questionGuide(quiz.subject);
-  const prompt = q.type === "choice" && q.topic ? q.topic : q.prompt;
+  const guide = q.type === "clock" || q.type === "choice" ? q.prompt : q.topic || questionGuide(quiz.subject);
+  const prompt = q.type === "clock" || q.type === "choice" && q.topic ? q.topic : q.prompt;
   document.getElementById("question-guide").textContent = guide;
   document.getElementById("question-box").innerHTML = q.hint ? `${prompt}<br><small>${q.hint}</small>` : prompt;
   document.getElementById("feedback").textContent = "";
@@ -465,8 +475,8 @@ function renderQuestion() {
   document.getElementById("next-question").hidden = true;
   setResultButtons(false);
   const answerBox = document.getElementById("answer-box");
-  if (q.type === "choice") {
-    answerBox.innerHTML = `<div class="choice-grid">${q.choices.map((choice) => `<button class="choice" data-choice="${choice}">${choice}</button>`).join("")}</div>`;
+  if (q.type === "choice" || q.type === "clock") {
+    answerBox.innerHTML = `<div class="choice-grid">${shuffle(q.choices).map((choice) => `<button class="choice" data-choice="${choice}">${choice}</button>`).join("")}</div>`;
   } else {
     answerBox.innerHTML = `<input id="answer-input" class="answer-input" inputmode="${q.type === "number" ? "numeric" : "latin"}" autocomplete="off" />`;
     document.getElementById("answer-input").focus();
@@ -482,7 +492,7 @@ function questionGuide(subject) {
 function checkAnswer() {
   if (!quiz || quiz.locked) return;
   const q = quiz.questions[quiz.index];
-  const value = q.type === "choice"
+  const value = q.type === "choice" || q.type === "clock"
     ? selectedChoice
     : document.getElementById("answer-input").value.trim().toLowerCase().replace(/\s+/g, " ");
   if (!value) {

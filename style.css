@@ -683,6 +683,41 @@ h2 {
   line-height: 1.3;
 }
 
+.clock-face {
+  width: min(220px, 70vw);
+  height: auto;
+}
+
+.clock-face circle {
+  fill: #fff8df;
+  stroke: #243447;
+  stroke-width: 6;
+}
+
+.clock-face .clock-center {
+  fill: #243447;
+  stroke: none;
+}
+
+.clock-numbers {
+  fill: #243447;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.clock-hand {
+  stroke: #243447;
+  stroke-linecap: round;
+}
+
+.clock-hand--hour {
+  stroke-width: 9;
+}
+
+.clock-hand--minute {
+  stroke-width: 5;
+}
+
 .question-guide {
   margin: 4px 0 0;
   color: var(--green-dark);
