@@ -234,17 +234,23 @@ function renderAvatar() {
   const word = clampLevel(state.levels.word);
   const avatar = document.getElementById("avatar");
   const buddy = document.getElementById("buddy");
+  const redBuddy = document.getElementById("red-buddy");
   const elder = math === MAX_LEVEL && roma === MAX_LEVEL && word === MAX_LEVEL;
-  const heroLevel = elder ? 10 : Math.min(9, Math.max(math, roma));
+  const heroLevel = elder ? 10 : Math.min(9, math);
   const heroSrc = heroAsset(heroLevel);
-  const buddySrc = buddyAsset(word);
+  const buddySrc = buddyAsset(roma);
+  const redBuddySrc = redBuddyAsset(word);
   avatar.innerHTML = `
     <img class="character-sprite hero-sprite" src="${heroSrc}" alt="しゅじんこう" />
     <span class="sprite-level">L${heroLevel}</span>
   `;
-  buddy.innerHTML = `
-    <img class="character-sprite buddy-sprite" src="${buddySrc}" alt="あいぼう" />
+  redBuddy.innerHTML = `
+    <img class="character-sprite red-buddy-sprite" src="${redBuddySrc}" alt="とけいのあいぼう" />
     <span class="sprite-level buddy-level">L${word}</span>
+  `;
+  buddy.innerHTML = `
+    <img class="character-sprite buddy-sprite" src="${buddySrc}" alt="ローマじのあいぼう" />
+    <span class="sprite-level buddy-level">L${roma}</span>
   `;
 }
 
@@ -259,6 +265,12 @@ function buddyAsset(level) {
   if (level >= 8) return "./assets/buddy/buddy_lv10.png";
   if (level >= 4) return "./assets/buddy/buddy_lv05.png";
   return "./assets/buddy/buddy_lv01.png";
+}
+
+function redBuddyAsset(level) {
+  if (level >= 8) return "./assets/buddy/red_buddy_lv10.png";
+  if (level >= 4) return "./assets/buddy/red_buddy_lv05.png";
+  return "./assets/buddy/red_buddy_lv01.png";
 }
 
 function renderStatus() {
