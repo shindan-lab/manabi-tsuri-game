@@ -459,6 +459,7 @@ function renderQuestion() {
   document.getElementById("feedback").textContent = "";
   document.getElementById("check-answer").hidden = false;
   document.getElementById("next-question").hidden = true;
+  setResultButtons(false);
   const answerBox = document.getElementById("answer-box");
   if (q.type === "choice") {
     answerBox.innerHTML = `<div class="choice-grid">${q.choices.map((choice) => `<button class="choice" data-choice="${choice}">${choice}</button>`).join("")}</div>`;
@@ -509,6 +510,8 @@ function finishQuiz() {
   document.getElementById("next-question").hidden = true;
   document.getElementById("answer-box").innerHTML = "";
   document.getElementById("question-box").textContent = `${quiz.correct}/5`;
+  const finishedSubject = quiz.subject;
+  const finishedLevel = quiz.level;
   if (clear) {
     const clearedLatestLevel = quiz.level === state.levels[quiz.subject];
     if (clearedLatestLevel && state.levels[quiz.subject] < MAX_LEVEL) {
@@ -517,6 +520,7 @@ function finishQuiz() {
     }
     state.tickets += 1;
     feedback.textContent = "すごい！ぜんぶできた！つりけんをもらったよ。";
+    setResultButtons(true, finishedSubject, finishedLevel, state.levels[finishedSubject]);
   } else {
     state.bait += 1;
     while (state.bait >= 3) {
@@ -524,10 +528,23 @@ function finishQuiz() {
       state.tickets += 1;
     }
     feedback.textContent = resultMessage(quiz.correct);
+    setResultButtons(true, finishedSubject, finishedLevel, state.levels[finishedSubject]);
   }
   saveState();
   render();
-  setTimeout(() => startQuiz(quiz.subject), 1600);
+}
+
+function setResultButtons(show, subject = activeSubject, finishedLevel = selectedLevels[activeSubject], maxLevel = state.levels[activeSubject]) {
+  const retry = document.getElementById("retry-level");
+  const next = document.getElementById("next-level");
+  const fish = document.getElementById("go-fishing");
+  retry.hidden = !show;
+  fish.hidden = !show;
+  next.hidden = !show || finishedLevel >= maxLevel;
+  retry.dataset.subject = subject;
+  retry.dataset.level = String(finishedLevel);
+  next.dataset.subject = subject;
+  next.dataset.level = String(Math.min(finishedLevel + 1, MAX_LEVEL));
 }
 
 function resultMessage(correct) {
@@ -675,6 +692,15 @@ document.addEventListener("click", (event) => {
 document.getElementById("check-answer").addEventListener("click", checkAnswer);
 document.getElementById("next-question").addEventListener("click", nextQuestion);
 document.getElementById("fish-button").addEventListener("click", goFishing);
+document.getElementById("retry-level").addEventListener("click", () => {
+  selectedLevels[activeSubject] = quiz ? quiz.level : selectedLevels[activeSubject];
+  startQuiz(activeSubject);
+});
+document.getElementById("next-level").addEventListener("click", () => {
+  const level = Number(document.getElementById("next-level").dataset.level);
+  selectLevel(level);
+});
+document.getElementById("go-fishing").addEventListener("click", () => setView("fish"));
 document.querySelectorAll(".reset-control").forEach((control) => control.addEventListener("click", () => {
   const button = control;
   if (!resetArmed) {
