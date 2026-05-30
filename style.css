@@ -188,17 +188,55 @@ h2 {
 
 .avatar {
   left: 42%;
-  bottom: 76px;
-  width: 132px;
-  height: 176px;
+  bottom: 48px;
+  width: 190px;
+  height: 240px;
   transform: translateX(-50%);
 }
 
 .buddy {
   right: 22%;
-  bottom: 76px;
-  width: 104px;
-  height: 112px;
+  bottom: 58px;
+  width: 150px;
+  height: 170px;
+}
+
+.character-sprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 10px rgba(34, 52, 71, 0.22));
+}
+
+.hero-sprite {
+  transform-origin: 50% 100%;
+}
+
+.buddy-sprite {
+  transform-origin: 50% 100%;
+}
+
+.sprite-level {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 26px;
+  padding: 0 8px;
+  border: 2px solid #243447;
+  border-radius: 999px;
+  background: #fff;
+  color: #243447;
+  font-size: 0.78rem;
+  font-weight: 900;
+  transform: translateX(-50%);
+}
+
+.buddy-level {
+  bottom: 0;
 }
 
 .person {

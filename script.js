@@ -234,37 +234,31 @@ function renderAvatar() {
   const word = clampLevel(state.levels.word);
   const avatar = document.getElementById("avatar");
   const buddy = document.getElementById("buddy");
-  const scale = 0.78 + math * 0.035;
   const elder = math === MAX_LEVEL && roma === MAX_LEVEL && word === MAX_LEVEL;
-  avatar.style.transform = `translateX(-50%) scale(${scale})`;
-  const itemClass = roma >= 9 ? "item__head--star" : roma >= 7 ? "item__head--map" : roma >= 4 ? "item__head--net" : "item__head--bucket";
-  const bodyRadius = math >= 8 ? 14 : math >= 5 ? 18 : 24;
+  const heroLevel = elder ? 10 : Math.min(9, Math.max(math, roma));
+  const heroSrc = heroAsset(heroLevel);
+  const buddySrc = buddyAsset(word);
   avatar.innerHTML = `
-    <div class="person" style="--outfit:${outfits[roma - 1]};--item:${itemColors[roma - 1]}">
-      <div class="hair" style="height:${elder ? 24 : 28 + math * 2}px;background:${elder ? "#f7f7f7" : "#5b3a2b"}"></div>
-      <div class="head"></div>
-      <div class="eye eye--l"></div>
-      <div class="eye eye--r"></div>
-      <div class="mouth"></div>
-      <div class="body" style="height:${70 + math * 3}px;border-radius:${bodyRadius}px ${bodyRadius}px 12px 12px"></div>
-      <div class="body-mark"></div>
-      <div class="level-badge">L${Math.max(math, roma)}</div>
-      <div class="arm arm--l"></div>
-      <div class="arm arm--r"></div>
-      <div class="leg leg--l"></div>
-      <div class="leg leg--r"></div>
-      <div class="item"><div class="item__head ${itemClass}"></div></div>
-    </div>
+    <img class="character-sprite hero-sprite" src="${heroSrc}" alt="しゅじんこう" />
+    <span class="sprite-level">L${heroLevel}</span>
   `;
-  buddy.style.transform = `scale(${0.76 + word * 0.035})`;
   buddy.innerHTML = `
-    <div class="buddy-creature" style="--buddy:${buddyColors[word - 1]}">
-      ${word >= 4 ? '<div class="buddy-fin"></div>' : ''}
-      ${word >= 7 ? '<div class="buddy-horn"></div>' : ''}
-      <div class="buddy-eye buddy-eye--l"></div>
-      <div class="buddy-eye buddy-eye--r"></div>
-    </div>
+    <img class="character-sprite buddy-sprite" src="${buddySrc}" alt="あいぼう" />
+    <span class="sprite-level buddy-level">L${word}</span>
   `;
+}
+
+function heroAsset(level) {
+  if (level >= 10) return "./assets/characters/hero_lv10.png";
+  if (level >= 8) return "./assets/characters/hero_lv09.png";
+  if (level >= 4) return "./assets/characters/hero_lv05.png";
+  return "./assets/characters/hero_lv01.png";
+}
+
+function buddyAsset(level) {
+  if (level >= 8) return "./assets/buddy/buddy_lv10.png";
+  if (level >= 4) return "./assets/buddy/buddy_lv05.png";
+  return "./assets/buddy/buddy_lv01.png";
 }
 
 function renderStatus() {
