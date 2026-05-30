@@ -85,6 +85,7 @@
         <div class="subject-picker" id="subject-picker"></div>
         <div class="level-picker" id="level-picker" aria-label="れべるをえらぶ"></div>
         <div class="panel quiz-panel" id="quiz-panel">
+          <div id="answer-mark" class="answer-mark" aria-hidden="true"></div>
           <div class="quiz-head">
             <div>
               <p class="eyebrow" id="quiz-subtitle">さんすう</p>
@@ -136,6 +137,20 @@
         </div>
       </section>
     </main>
+
+    <div id="evolution-modal" class="evolution-modal" hidden>
+      <div class="evolution-card">
+        <p class="eyebrow">ぱわーあっぷ！</p>
+        <div class="evolution-stage">
+          <img id="evolution-before" alt="" />
+          <span>→</span>
+          <img id="evolution-after" alt="" />
+        </div>
+        <h2 id="evolution-title">すがたがかわった！</h2>
+        <p id="evolution-message">とてもつよくなったよ。</p>
+        <button id="close-evolution" class="primary">すすむ</button>
+      </div>
+    </div>
 
     <script src="./script.js"></script>
   </body>

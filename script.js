@@ -95,14 +95,14 @@ const fishList = [
   fish("yamame", "ヤマメ", "たまにでる", "#9fd7ca", 3, 0.1),
   fish("nijimasu", "ニジマス", "たまにでる", "#b69cff", 4, 0.09),
   fish("kasago", "カサゴ", "たまにでる", "#d95d39", 5, 0.08),
-  fish("rare_nijimasu", "きらきらニジマス", "レア", "#8be8c4", 5, 0.055),
-  fish("rare_ayu", "ぎんいろアユ", "レア", "#e8f7ff", 6, 0.05),
-  fish("rare_ishidai", "しましまイシダイ", "レア", "#d7d2c6", 7, 0.045),
-  fish("rare_tobiuo", "あおぞらトビウオ", "レア", "#5cc8ff", 8, 0.04),
-  fish("rare_kingyo", "こがねキンギョ", "レア", "#f6c445", 8, 0.035),
-  fish("legend_koi", "にじいろコイ", "でんせつ", "#f6a6c9", 9, 0.025),
-  fish("legend_tai", "おうごんタイ", "でんせつ", "#ffd166", 10, 0.02),
-  fish("legend_coelacanth", "まぼろしシーラカンス", "でんせつ", "#5f6caf", 10, 0.015),
+  fish("rare_nijimasu", "きらきらニジマス", "レア", "#8be8c4", 5, 0.055, "./assets/fish/rare_nijimasu.png"),
+  fish("rare_ayu", "ぎんいろアユ", "レア", "#e8f7ff", 6, 0.05, "./assets/fish/rare_ayu.png"),
+  fish("rare_ishidai", "しましまイシダイ", "レア", "#d7d2c6", 7, 0.045, "./assets/fish/rare_ishidai.png"),
+  fish("rare_tobiuo", "あおぞらトビウオ", "レア", "#5cc8ff", 8, 0.04, "./assets/fish/rare_tobiuo.png"),
+  fish("rare_kingyo", "こがねキンギョ", "レア", "#f6c445", 8, 0.035, "./assets/fish/rare_kingyo.png"),
+  fish("legend_koi", "にじいろコイ", "でんせつ", "#f6a6c9", 9, 0.025, "./assets/fish/legend_koi.png"),
+  fish("legend_tai", "おうごんタイ", "でんせつ", "#ffd166", 10, 0.02, "./assets/fish/legend_tai.png"),
+  fish("legend_coelacanth", "まぼろしシーラカンス", "でんせつ", "#5f6caf", 10, 0.015, "./assets/fish/legend_coelacanth.png"),
 ];
 
 let state = loadState();
@@ -188,8 +188,8 @@ function shuffle(items) {
   return copy;
 }
 
-function fish(id, name, rarity, color, minLevel, weight) {
-  return { id, name, rarity, color, minLevel, weight };
+function fish(id, name, rarity, color, minLevel, weight, image = "") {
+  return { id, name, rarity, color, minLevel, weight, image };
 }
 
 function defaultState() {
@@ -232,29 +232,35 @@ function render() {
 }
 
 function renderAvatar() {
-  const math = clampLevel(state.levels.math);
-  const roma = clampLevel(state.levels.roma);
-  const word = clampLevel(state.levels.word);
+  const snapshot = avatarSnapshot();
   const avatar = document.getElementById("avatar");
   const buddy = document.getElementById("buddy");
   const redBuddy = document.getElementById("red-buddy");
-  const elder = math === MAX_LEVEL && roma === MAX_LEVEL && word === MAX_LEVEL;
-  const heroLevel = elder ? 10 : Math.min(9, math);
-  const heroSrc = heroAsset(heroLevel);
-  const buddySrc = buddyAsset(roma);
-  const redBuddySrc = redBuddyAsset(word);
   avatar.innerHTML = `
-    <img class="character-sprite hero-sprite" src="${heroSrc}" alt="しゅじんこう" />
-    <span class="sprite-level">L${heroLevel}</span>
+    <img class="character-sprite hero-sprite" src="${snapshot.hero.src}" alt="しゅじんこう" />
+    <span class="sprite-level">L${snapshot.hero.level}</span>
   `;
   redBuddy.innerHTML = `
-    <img class="character-sprite red-buddy-sprite" src="${redBuddySrc}" alt="とけいのあいぼう" />
-    <span class="sprite-level buddy-level">L${word}</span>
+    <img class="character-sprite red-buddy-sprite" src="${snapshot.red.src}" alt="とけいのあいぼう" />
+    <span class="sprite-level buddy-level">L${snapshot.red.level}</span>
   `;
   buddy.innerHTML = `
-    <img class="character-sprite buddy-sprite" src="${buddySrc}" alt="ローマじのあいぼう" />
-    <span class="sprite-level buddy-level">L${roma}</span>
+    <img class="character-sprite buddy-sprite" src="${snapshot.blue.src}" alt="ローマじのあいぼう" />
+    <span class="sprite-level buddy-level">L${snapshot.blue.level}</span>
   `;
+}
+
+function avatarSnapshot() {
+  const math = clampLevel(state.levels.math);
+  const roma = clampLevel(state.levels.roma);
+  const word = clampLevel(state.levels.word);
+  const elder = math === MAX_LEVEL && roma === MAX_LEVEL && word === MAX_LEVEL;
+  const heroLevel = elder ? 10 : Math.min(9, math);
+  return {
+    hero: { key: "hero", level: heroLevel, src: heroAsset(heroLevel), name: "しゅじんこう" },
+    blue: { key: "blue", level: roma, src: buddyAsset(roma), name: "あおい あいぼう" },
+    red: { key: "red", level: word, src: redBuddyAsset(word), name: "あかい あいぼう" },
+  };
 }
 
 function heroAsset(level) {
@@ -472,6 +478,7 @@ function renderQuestion() {
   const q = quiz.questions[quiz.index];
   selectedChoice = "";
   quiz.locked = false;
+  document.getElementById("answer-mark").className = "answer-mark";
   document.getElementById("quiz-subtitle").textContent = subjectInfo[quiz.subject].label;
   document.getElementById("quiz-title").textContent = `れべる ${quiz.level}`;
   document.getElementById("question-count").textContent = quiz.index + 1;
@@ -511,9 +518,19 @@ function checkAnswer() {
   const ok = q.answers ? q.answers.includes(normalizeAnswer(value)) : value === q.answer;
   if (ok) quiz.correct += 1;
   quiz.locked = true;
+  showAnswerMark(ok);
   document.getElementById("feedback").textContent = ok ? "せいかい！" : "ちがうよ。こたえは " + q.answer;
   document.getElementById("check-answer").hidden = true;
   document.getElementById("next-question").hidden = false;
+}
+
+function showAnswerMark(ok) {
+  const mark = document.getElementById("answer-mark");
+  mark.textContent = ok ? "○" : "×";
+  mark.className = `answer-mark ${ok ? "is-correct" : "is-wrong"} is-showing`;
+  setTimeout(() => {
+    mark.classList.remove("is-showing");
+  }, 900);
 }
 
 function nextQuestion() {
@@ -529,6 +546,7 @@ function nextQuestion() {
 function finishQuiz() {
   const clear = quiz.correct === QUESTIONS_PER_LEVEL;
   const feedback = document.getElementById("feedback");
+  const beforeAvatar = avatarSnapshot();
   document.getElementById("check-answer").hidden = true;
   document.getElementById("next-question").hidden = true;
   document.getElementById("answer-box").innerHTML = "";
@@ -540,8 +558,9 @@ function finishQuiz() {
     if (clearedLatestLevel && state.levels[quiz.subject] < MAX_LEVEL) {
       state.levels[quiz.subject] += 1;
     }
-    state.tickets += 1;
-    feedback.textContent = "すごい！ぜんぶできた！つりけんをもらったよ。";
+    const reward = ticketReward(finishedLevel);
+    state.tickets += reward;
+    feedback.textContent = `すごい！ぜんぶできた！つりけんを ${reward}まい もらったよ。`;
     setResultButtons(true, finishedSubject, finishedLevel, state.levels[finishedSubject]);
   } else {
     state.bait += 1;
@@ -554,6 +573,26 @@ function finishQuiz() {
   }
   saveState();
   render();
+  if (clear) showEvolutionIfChanged(beforeAvatar, avatarSnapshot());
+}
+
+function ticketReward(level) {
+  if (level >= 10) return 5;
+  if (level >= 7) return 3;
+  if (level >= 4) return 2;
+  return 1;
+}
+
+function showEvolutionIfChanged(before, after) {
+  const changed = ["hero", "blue", "red"].find((key) => before[key].src !== after[key].src);
+  if (!changed) return;
+  const modal = document.getElementById("evolution-modal");
+  document.getElementById("evolution-before").src = before[changed].src;
+  document.getElementById("evolution-after").src = after[changed].src;
+  document.getElementById("evolution-title").textContent = `${after[changed].name}が ぱわーあっぷ！`;
+  document.getElementById("evolution-message").textContent = `れべる ${after[changed].level} の すがたに なったよ。`;
+  modal.hidden = false;
+  modal.classList.remove("is-closing");
 }
 
 function setResultButtons(show, subject = activeSubject, finishedLevel = selectedLevels[activeSubject], maxLevel = state.levels[activeSubject]) {
@@ -654,7 +693,7 @@ function showCaughtFish(fishItem) {
   stage.querySelector(".caught-fish")?.remove();
   const wrap = document.createElement("div");
   wrap.className = `caught-fish ${isRareFish(fishItem) ? "is-rare" : ""}`;
-  wrap.innerHTML = fishSvg(fishItem);
+  wrap.innerHTML = fishArt(fishItem);
   stage.appendChild(wrap);
 }
 
@@ -665,12 +704,19 @@ function renderFishBook() {
     const locked = count === 0;
     return `
       <article class="fish-card ${locked ? "is-locked" : ""}">
-        <div class="fish-thumb">${fishSvg(item)}</div>
+        <div class="fish-thumb">${fishArt(item)}</div>
         <strong>${locked ? "？？？" : item.name}</strong>
         <span>${locked ? "まだだよ" : `${item.rarity} ${count}`}</span>
       </article>
     `;
   }).join("");
+}
+
+function fishArt(item) {
+  if (item.image) {
+    return `<img class="fish-img" src="${item.image}" alt="${item.name}" />`;
+  }
+  return fishSvg(item);
 }
 
 function fishSvg(item) {
@@ -721,6 +767,14 @@ document.getElementById("next-level").addEventListener("click", () => {
   selectLevel(level);
 });
 document.getElementById("go-fishing").addEventListener("click", () => setView("fish"));
+document.getElementById("close-evolution").addEventListener("click", () => {
+  const modal = document.getElementById("evolution-modal");
+  modal.classList.add("is-closing");
+  setTimeout(() => {
+    modal.hidden = true;
+    modal.classList.remove("is-closing");
+  }, 180);
+});
 document.querySelectorAll(".reset-control").forEach((control) => control.addEventListener("click", () => {
   const button = control;
   if (!resetArmed) {
