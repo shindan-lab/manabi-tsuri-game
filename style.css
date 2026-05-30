@@ -53,7 +53,7 @@ button:disabled {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.25fr);
+  grid-template-columns: minmax(440px, 1fr) minmax(480px, 1.25fr);
   gap: 20px;
   align-items: stretch;
   min-height: 320px;
@@ -64,6 +64,46 @@ button:disabled {
   flex-direction: column;
   justify-content: center;
   padding: 20px 0;
+}
+
+.title-logo {
+  position: relative;
+  max-width: 620px;
+  padding: 22px 24px 26px;
+  border: 4px solid #3ea67a;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 90% 16%, rgba(246, 196, 69, 0.42), transparent 4.5rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 248, 232, 0.86));
+  box-shadow: 0 14px 0 rgba(47, 155, 114, 0.18), 0 16px 28px rgba(61, 101, 124, 0.14);
+}
+
+.title-logo::before,
+.title-logo::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.title-logo::before {
+  right: 28px;
+  bottom: 24px;
+  width: 72px;
+  height: 38px;
+  border: 5px solid #2889c9;
+  border-left: 0;
+  border-radius: 50%;
+  transform: rotate(-10deg);
+}
+
+.title-logo::after {
+  right: 92px;
+  bottom: 34px;
+  width: 24px;
+  height: 24px;
+  border-left: 5px solid #2889c9;
+  border-bottom: 5px solid #2889c9;
+  transform: rotate(45deg);
 }
 
 .eyebrow {
@@ -81,7 +121,7 @@ p {
 
 h1 {
   margin-bottom: 10px;
-  font-size: 4.5rem;
+  font-size: 4.1rem;
   line-height: 1;
   letter-spacing: 0;
 }
@@ -95,7 +135,7 @@ h2 {
 
 .lead {
   color: var(--muted);
-  font-size: 1.22rem;
+  font-size: 1.1rem;
   font-weight: 700;
 }
 
@@ -105,11 +145,12 @@ h2 {
   min-height: 320px;
   border: 3px solid #91d6e9;
   border-radius: 8px;
-  background: linear-gradient(180deg, #8fe2ff 0%, #ddfbff 55%, #aee66f 56%, #69bd63 100%);
+  background: url("./assets/backgrounds/main_stage.png") center / cover no-repeat;
 }
 
 .sun {
   position: absolute;
+  display: none;
   top: 28px;
   right: 38px;
   width: 64px;
@@ -121,6 +162,7 @@ h2 {
 
 .cloud {
   position: absolute;
+  display: none;
   width: 110px;
   height: 34px;
   border-radius: 999px;
@@ -162,6 +204,7 @@ h2 {
 
 .island {
   position: absolute;
+  display: none;
   left: 12%;
   right: 12%;
   bottom: 38px;
@@ -173,6 +216,7 @@ h2 {
 
 .water {
   position: absolute;
+  display: none;
   left: 0;
   right: 0;
   bottom: 0;
@@ -188,7 +232,7 @@ h2 {
 
 .avatar {
   left: 42%;
-  bottom: 48px;
+  bottom: 20px;
   width: 190px;
   height: 240px;
   transform: translateX(-50%);
@@ -196,7 +240,7 @@ h2 {
 
 .buddy {
   right: 22%;
-  bottom: 58px;
+  bottom: 28px;
   width: 150px;
   height: 170px;
 }
@@ -823,11 +867,12 @@ h2 {
   overflow: hidden;
   min-height: 300px;
   border-radius: 8px;
-  background: #98e0ff;
+  background: url("./assets/backgrounds/main_stage.png") center / cover no-repeat;
 }
 
 .pond-sky {
   position: absolute;
+  display: none;
   inset: 0 0 42%;
   background: linear-gradient(180deg, #9be7ff, #effdff);
 }
@@ -836,8 +881,8 @@ h2 {
   position: absolute;
   inset: 48% 0 0;
   background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.28) 0 32px, transparent 32px 68px),
-    linear-gradient(180deg, #5cc6e8, #267bb5);
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 32px, transparent 32px 68px),
+    linear-gradient(180deg, rgba(92, 198, 232, 0.35), rgba(38, 123, 181, 0.52));
 }
 
 .rod {
