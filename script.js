@@ -79,11 +79,11 @@ const clockLevels = [
   [clockQ(6, 0), clockQ(7, 0), clockQ(8, 0), clockQ(9, 0), clockQ(10, 0)],
   [clockQ(1, 30), clockQ(2, 30), clockQ(3, 30), clockQ(4, 30), clockQ(5, 30)],
   [clockQ(6, 30), clockQ(7, 30), clockQ(8, 30), clockQ(9, 30), clockQ(10, 30)],
-  [clockQ(1, 0, "つぎの じこくは？", 2, 0), clockQ(3, 0, "つぎの じこくは？", 4, 0), clockQ(5, 0, "つぎの じこくは？", 6, 0), clockQ(7, 0, "つぎの じこくは？", 8, 0), clockQ(9, 0, "つぎの じこくは？", 10, 0)],
+  [clockQ(1, 0, "この とけいの 1じかんごは？", 2, 0), clockQ(3, 0, "この とけいの 1じかんごは？", 4, 0), clockQ(5, 0, "この とけいの 1じかんごは？", 6, 0), clockQ(7, 0, "この とけいの 1じかんごは？", 8, 0), clockQ(9, 0, "この とけいの 1じかんごは？", 10, 0)],
   [clockQ(1, 15), clockQ(2, 45), clockQ(4, 15), clockQ(5, 45), clockQ(7, 15)],
   [clockQ(1, 5), clockQ(2, 10), clockQ(3, 20), clockQ(4, 25), clockQ(5, 55)],
   [clockQ(8, 10), clockQ(9, 25), clockQ(10, 35), clockQ(11, 40), clockQ(12, 50)],
-  [clockQ(2, 0, "1じかん あとは？", 3, 0), clockQ(4, 30, "1じかん あとは？", 5, 30), clockQ(6, 15, "1じかん あとは？", 7, 15), clockQ(8, 45, "1じかん あとは？", 9, 45), clockQ(10, 20, "1じかん あとは？", 11, 20)],
+  [clockQ(2, 0, "この とけいの 1じかんごは？", 3, 0), clockQ(4, 30, "この とけいの 1じかんごは？", 5, 30), clockQ(6, 15, "この とけいの 1じかんごは？", 7, 15), clockQ(8, 45, "この とけいの 1じかんごは？", 9, 45), clockQ(10, 20, "この とけいの 1じかんごは？", 11, 20)],
   [clockQ(6, 0, "あさの つりは？"), clockQ(12, 0, "おひるの つりは？"), clockQ(3, 30, "おやつの じかんは？"), clockQ(5, 0, "ゆうがたの つりは？"), clockQ(7, 30, "よるの じかんは？")],
 ];
 
@@ -530,7 +530,6 @@ function finishQuiz() {
     const clearedLatestLevel = quiz.level === state.levels[quiz.subject];
     if (clearedLatestLevel && state.levels[quiz.subject] < MAX_LEVEL) {
       state.levels[quiz.subject] += 1;
-      selectedLevels[quiz.subject] = state.levels[quiz.subject];
     }
     state.tickets += 1;
     feedback.textContent = "すごい！ぜんぶできた！つりけんをもらったよ。";
@@ -556,9 +555,11 @@ function setResultButtons(show, subject = activeSubject, finishedLevel = selecte
   fish.hidden = !show;
   next.hidden = !show || finishedLevel >= maxLevel;
   retry.dataset.subject = subject;
-  retry.dataset.level = String(finishedLevel);
+  retry.dataset.retryLevel = String(finishedLevel);
   next.dataset.subject = subject;
-  next.dataset.level = String(Math.min(finishedLevel + 1, MAX_LEVEL));
+  next.dataset.nextLevel = String(Math.min(finishedLevel + 1, MAX_LEVEL));
+  delete retry.dataset.level;
+  delete next.dataset.level;
 }
 
 function resultMessage(correct) {
@@ -711,7 +712,7 @@ document.getElementById("retry-level").addEventListener("click", () => {
   startQuiz(activeSubject);
 });
 document.getElementById("next-level").addEventListener("click", () => {
-  const level = Number(document.getElementById("next-level").dataset.level);
+  const level = Number(document.getElementById("next-level").dataset.nextLevel);
   selectLevel(level);
 });
 document.getElementById("go-fishing").addEventListener("click", () => setView("fish"));
