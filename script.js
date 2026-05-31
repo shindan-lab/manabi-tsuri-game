@@ -369,7 +369,7 @@ function buildQuestions(subject, level) {
       topic: "ローマじで うとう",
       hint: level <= 7 ? roma : "",
       answer: roma,
-      answers: romajiAnswers(roma),
+      answers: romajiAnswers(kana, roma),
     }));
   }
   return clockLevels[level - 1];
@@ -391,78 +391,85 @@ function buildMathQuestions(level) {
   return Array.from({ length: QUESTIONS_PER_LEVEL }, specs[level - 1]);
 }
 
-function romajiAnswers(base) {
-  const parts = base.split(" ");
-  const variants = parts.map(romajiWordVariants);
-  return combineVariants(variants).map(normalizeAnswer);
+function romajiAnswers(kana, hint) {
+  const answers = new Set(romajiKanaVariants(kana).map(normalizeAnswer));
+  if (hint) answers.add(normalizeAnswer(hint));
+  return [...answers];
 }
 
-function romajiWordVariants(word) {
+function romajiKanaVariants(kana) {
+  const text = kanaToHiragana(kana);
+  const groups = [];
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    const next = text[index + 1] || "";
+    if (char === "っ") {
+      const nextVariants = kanaChunkVariants(next);
+      const doubled = nextVariants
+        .map((item) => doubleConsonant(item))
+        .filter(Boolean);
+      groups.push([...new Set([...doubled, "ltu", "xtu"])]);
+      continue;
+    }
+    if ("ゃゅょ".includes(next)) {
+      groups.push(kanaChunkVariants(char + next));
+      index += 1;
+      continue;
+    }
+    groups.push(kanaChunkVariants(char));
+  }
+  return combineRomajiGroups(groups);
+}
+
+function kanaToHiragana(text) {
+  return text.replace(/[ァ-ン]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
+}
+
+function kanaChunkVariants(chunk) {
   const map = {
-    tsu: ["tsu", "tu"],
-    shi: ["shi", "si"],
-    chi: ["chi", "ti"],
-    fu: ["fu", "hu"],
-    ji: ["ji", "zi"],
-    ja: ["ja", "zya"],
-    ju: ["ju", "zyu"],
-    jo: ["jo", "zyo"],
-    sha: ["sha", "sya"],
-    shu: ["shu", "syu"],
-    sho: ["sho", "syo"],
-    cha: ["cha", "tya"],
-    chu: ["chu", "tyu"],
-    cho: ["cho", "tyo"],
-    gyo: ["gyo", "gilyo"],
-    kyo: ["kyo", "kilyo"],
-    ppa: ["ppa", "ltupa", "xtupa"],
-    tte: ["tte", "ltute", "xtute"],
-    kkou: ["kkou", "ltukou", "xtukou"],
-    shou: ["shou", "syou"],
-    wo: ["wo"],
+    あ: ["a"], い: ["i"], う: ["u"], え: ["e"], お: ["o"],
+    か: ["ka"], き: ["ki"], く: ["ku"], け: ["ke"], こ: ["ko"],
+    さ: ["sa"], し: ["shi", "si"], す: ["su"], せ: ["se"], そ: ["so"],
+    た: ["ta"], ち: ["chi", "ti"], つ: ["tsu", "tu"], て: ["te"], と: ["to"],
+    な: ["na"], に: ["ni"], ぬ: ["nu"], ね: ["ne"], の: ["no"],
+    は: ["ha"], ひ: ["hi"], ふ: ["fu", "hu"], へ: ["he"], ほ: ["ho"],
+    ま: ["ma"], み: ["mi"], む: ["mu"], め: ["me"], も: ["mo"],
+    や: ["ya"], ゆ: ["yu"], よ: ["yo"],
+    ら: ["ra"], り: ["ri"], る: ["ru"], れ: ["re"], ろ: ["ro"],
+    わ: ["wa"], を: ["wo"], ん: ["n", "nn"],
+    が: ["ga"], ぎ: ["gi"], ぐ: ["gu"], げ: ["ge"], ご: ["go"],
+    ざ: ["za"], じ: ["ji", "zi"], ず: ["zu"], ぜ: ["ze"], ぞ: ["zo"],
+    だ: ["da"], ぢ: ["di"], づ: ["du"], で: ["de"], ど: ["do"],
+    ば: ["ba"], び: ["bi"], ぶ: ["bu"], べ: ["be"], ぼ: ["bo"],
+    ぱ: ["pa"], ぴ: ["pi"], ぷ: ["pu"], ぺ: ["pe"], ぽ: ["po"],
+    ゃ: ["lya", "xya"], ゅ: ["lyu", "xyu"], ょ: ["lyo", "xyo"],
+    きゃ: ["kya", "kilya", "kixya"], きゅ: ["kyu", "kilyu", "kixyu"], きょ: ["kyo", "kilyo", "kixyo"],
+    しゃ: ["sha", "sya", "silya", "sixya", "shilya", "shixya"],
+    しゅ: ["shu", "syu", "silyu", "sixyu", "shilyu", "shixyu"],
+    しょ: ["sho", "syo", "silyo", "sixyo", "shilyo", "shixyo"],
+    ちゃ: ["cha", "tya", "tilya", "tixya", "chilya", "chixya"],
+    ちゅ: ["chu", "tyu", "tilyu", "tixyu", "chilyu", "chixyu"],
+    ちょ: ["cho", "tyo", "tilyo", "tixyo", "chilyo", "chixyo"],
+    じゃ: ["ja", "zya", "jilya", "jixya", "zilya", "zixya"],
+    じゅ: ["ju", "zyu", "jilyu", "jixyu", "zilyu", "zixyu"],
+    じょ: ["jo", "zyo", "jilyo", "jixyo", "zilyo", "zixyo"],
+    ぎゃ: ["gya", "gilya", "gixya"], ぎゅ: ["gyu", "gilyu", "gixyu"], ぎょ: ["gyo", "gilyo", "gixyo"],
+    ー: ["-"],
   };
-  let variants = [word];
-  for (const [from, tos] of Object.entries(map)) {
-    const next = new Set(variants);
-    for (const current of variants) {
-      if (!current.includes(from)) continue;
-      for (const to of tos) next.add(current.split(from).join(to));
-    }
-    variants = [...next];
-  }
-  variants = addDoubleNVariants(variants);
-  if (word.endsWith("n")) {
-    variants.push(`${word}n`);
-  }
-  return [...new Set(variants)];
+  return map[chunk] || [chunk];
 }
 
-function addDoubleNVariants(words) {
-  const consonantAfterN = /n(?=[bcdfghjklmpqrstvzw])/g;
-  const variants = new Set(words);
-  for (const word of words) {
-    const matches = [...word.matchAll(consonantAfterN)];
-    for (let mask = 1; mask < 2 ** matches.length; mask += 1) {
-      let result = "";
-      let last = 0;
-      matches.forEach((match, index) => {
-        result += word.slice(last, match.index);
-        result += mask & (1 << index) ? "nn" : "n";
-        last = match.index + 1;
-      });
-      result += word.slice(last);
-      variants.add(result);
-    }
-  }
-  return [...variants];
+function doubleConsonant(value) {
+  if (!/^[bcdfghjklmpqrstvwxyz]/.test(value)) return "";
+  return value[0];
 }
 
-function combineVariants(groups) {
+function combineRomajiGroups(groups) {
   return groups.reduce((acc, group) => {
     const next = [];
     for (const prefix of acc) {
       for (const item of group) {
-        next.push(prefix ? `${prefix} ${item}` : item);
+        next.push(`${prefix}${item}`);
       }
     }
     return next;
