@@ -705,13 +705,26 @@ function isRareFish(item) {
 function pickFish() {
   const level = currentBestLevel();
   const available = fishList.filter((item) => item.minLevel <= level);
-  const total = available.reduce((sum, item) => sum + item.weight, 0);
+  const weighted = available.map((item) => ({
+    item,
+    weight: fishDrawWeight(item),
+  }));
+  const total = weighted.reduce((sum, entry) => sum + entry.weight, 0);
   let draw = Math.random() * total;
-  for (const item of available) {
-    draw -= item.weight;
-    if (draw <= 0) return item;
+  for (const entry of weighted) {
+    draw -= entry.weight;
+    if (draw <= 0) return entry.item;
   }
   return available[0];
+}
+
+function fishDrawWeight(item) {
+  const seen = state.fish[item.id] || 0;
+  if (seen > 0) return item.weight;
+  if (item.rarity === "よくでる") return item.weight * 8;
+  if (item.rarity === "たまにでる") return item.weight * 6;
+  if (item.rarity === "レア") return item.weight * 2;
+  return item.weight * 1.5;
 }
 
 function showCaughtFish(fishItem) {
