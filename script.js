@@ -467,6 +467,9 @@ function renderAvatar() {
   const avatar = document.getElementById("avatar");
   const buddy = document.getElementById("buddy");
   const redBuddy = document.getElementById("red-buddy");
+  const worldBuddy = document.getElementById("world-buddy");
+  const animalBuddy = document.getElementById("animal-buddy");
+  const quizBuddy = document.getElementById("quiz-buddy");
   avatar.innerHTML = `
     <img class="character-sprite hero-sprite" src="${snapshot.hero.src}" alt="しゅじんこう" />
     <span class="sprite-level">L${snapshot.hero.level}</span>
@@ -479,18 +482,36 @@ function renderAvatar() {
     <img class="character-sprite buddy-sprite" src="${snapshot.blue.src}" alt="ローマじのあいぼう" />
     <span class="sprite-level buddy-level">L${snapshot.blue.level}</span>
   `;
+  worldBuddy.innerHTML = `
+    <img class="character-sprite world-buddy-sprite" src="${snapshot.world.src}" alt="せかいのあいぼう" />
+    <span class="sprite-level buddy-level">L${snapshot.world.level}</span>
+  `;
+  animalBuddy.innerHTML = `
+    <img class="character-sprite animal-buddy-sprite" src="${snapshot.animal.src}" alt="いきもののあいぼう" />
+    <span class="sprite-level buddy-level">L${snapshot.animal.level}</span>
+  `;
+  quizBuddy.innerHTML = `
+    <img class="character-sprite quiz-buddy-sprite" src="${snapshot.quiz.src}" alt="なぞなぞのあいぼう" />
+    <span class="sprite-level buddy-level">L${snapshot.quiz.level}</span>
+  `;
 }
 
 function avatarSnapshot() {
   const math = clampLevel(state.levels.math);
   const roma = clampLevel(state.levels.roma);
   const word = clampLevel(state.levels.word);
+  const world = clampLevel(state.levels.world);
+  const animal = clampLevel(state.levels.animal);
+  const quizLevel = clampLevel(state.levels.quiz);
   const elder = Object.values(state.levels).every((level) => level === MAX_LEVEL);
   const heroLevel = elder ? 10 : Math.min(9, math);
   return {
     hero: { key: "hero", level: heroLevel, src: heroAsset(heroLevel), name: "しゅじんこう" },
     blue: { key: "blue", level: roma, src: buddyAsset(roma), name: "あおい あいぼう" },
     red: { key: "red", level: word, src: redBuddyAsset(word), name: "あかい あいぼう" },
+    world: { key: "world", level: world, src: worldBuddyAsset(world), name: "せかいの あいぼう" },
+    animal: { key: "animal", level: animal, src: animalBuddyAsset(animal), name: "いきものの あいぼう" },
+    quiz: { key: "quiz", level: quizLevel, src: quizBuddyAsset(quizLevel), name: "なぞなぞの あいぼう" },
   };
 }
 
@@ -511,6 +532,24 @@ function redBuddyAsset(level) {
   if (level >= 8) return "./assets/buddy/red_buddy_lv10.png";
   if (level >= 4) return "./assets/buddy/red_buddy_lv05.png";
   return "./assets/buddy/red_buddy_lv01.png";
+}
+
+function worldBuddyAsset(level) {
+  if (level >= 8) return "./assets/buddy/world_buddy_lv10.png";
+  if (level >= 4) return "./assets/buddy/world_buddy_lv05.png";
+  return "./assets/buddy/world_buddy_lv01.png";
+}
+
+function animalBuddyAsset(level) {
+  if (level >= 8) return "./assets/buddy/animal_buddy_lv10.png";
+  if (level >= 4) return "./assets/buddy/animal_buddy_lv05.png";
+  return "./assets/buddy/animal_buddy_lv01.png";
+}
+
+function quizBuddyAsset(level) {
+  if (level >= 8) return "./assets/buddy/quiz_buddy_lv10.png";
+  if (level >= 4) return "./assets/buddy/quiz_buddy_lv05.png";
+  return "./assets/buddy/quiz_buddy_lv01.png";
 }
 
 function renderStatus() {
@@ -844,7 +883,7 @@ function ticketReward(level) {
 }
 
 function showEvolutionIfChanged(before, after) {
-  const changed = ["hero", "blue", "red"].find((key) => before[key].src !== after[key].src);
+  const changed = ["hero", "blue", "red", "world", "animal", "quiz"].find((key) => before[key].src !== after[key].src);
   if (!changed) return;
   const modal = document.getElementById("evolution-modal");
   document.getElementById("evolution-before").src = before[changed].src;

@@ -233,26 +233,52 @@ h2 {
 .avatar {
   left: 50%;
   bottom: 20px;
-  width: 190px;
-  height: 240px;
+  width: 174px;
+  height: 222px;
   transform: translateX(-50%);
 }
 
 .buddy {
   bottom: 28px;
-  width: 150px;
-  height: 170px;
+  width: 132px;
+  height: 150px;
 }
 
 .buddy--left {
-  left: 20%;
+  left: 14%;
 }
 
 .buddy--right {
-  right: 18%;
+  right: 13%;
   bottom: 28px;
-  width: 150px;
-  height: 170px;
+  width: 132px;
+  height: 150px;
+}
+
+.buddy--back-left,
+.buddy--back-center,
+.buddy--back-right {
+  bottom: 116px;
+  z-index: 1;
+  width: 106px;
+  height: 124px;
+  opacity: 0.98;
+}
+
+.buddy--back-left {
+  left: 4%;
+}
+
+.buddy--back-center {
+  left: 50%;
+  bottom: 140px;
+  width: 96px;
+  height: 112px;
+  transform: translateX(-50%);
+}
+
+.buddy--back-right {
+  right: 4%;
 }
 
 .character-sprite {
@@ -272,6 +298,12 @@ h2 {
 }
 
 .red-buddy-sprite {
+  transform-origin: 50% 100%;
+}
+
+.world-buddy-sprite,
+.animal-buddy-sprite,
+.quiz-buddy-sprite {
   transform-origin: 50% 100%;
 }
 
@@ -1278,5 +1310,49 @@ h2 {
 
   .level-picker {
     grid-template-columns: repeat(5, 1fr);
+  }
+
+  .stage {
+    min-height: 380px;
+  }
+
+  .avatar {
+    width: 142px;
+    height: 188px;
+  }
+
+  .buddy,
+  .buddy--right {
+    width: 104px;
+    height: 124px;
+  }
+
+  .buddy--left {
+    left: 8%;
+  }
+
+  .buddy--right {
+    right: 7%;
+  }
+
+  .buddy--back-left,
+  .buddy--back-right {
+    bottom: 168px;
+    width: 78px;
+    height: 96px;
+  }
+
+  .buddy--back-left {
+    left: 3%;
+  }
+
+  .buddy--back-right {
+    right: 3%;
+  }
+
+  .buddy--back-center {
+    bottom: 216px;
+    width: 72px;
+    height: 88px;
   }
 }
