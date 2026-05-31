@@ -343,6 +343,7 @@ let selectedChoice = "";
 let resetArmed = false;
 let fishingBusy = false;
 let pendingCatch = null;
+let fishingPullsLeft = 0;
 
 function qChoice(prompt, topic, choices, answer) {
   return { type: "choice", prompt, topic, choices, answer };
@@ -929,7 +930,7 @@ function goFishing() {
   const button = document.getElementById("fish-button");
   const stage = document.getElementById("fishing-stage");
   if (pendingCatch) {
-    finishFishing(pendingCatch);
+    pullFishingLine();
     return;
   }
   if (fishingBusy) return;
@@ -944,7 +945,7 @@ function goFishing() {
   render();
   stage.querySelector(".caught-fish")?.remove();
   stage.querySelector(".splash")?.remove();
-  stage.classList.remove("is-rare");
+  stage.classList.remove("is-rare", "is-super", "is-legend");
   message.textContent = "うきが ゆれてるよ...";
   button.textContent = "まってね";
   button.disabled = true;
@@ -954,20 +955,36 @@ function goFishing() {
     const splash = document.createElement("div");
     splash.className = "splash";
     stage.appendChild(splash);
-    const rare = isRareFish(caught);
-    if (rare) stage.classList.add("is-rare");
-    message.textContent = rare ? "すごい ひきだ！ひっぱれ！" : "きた！ひっぱれ！";
-    button.textContent = "ひっぱる";
+    applyFishingRarityClass(stage, caught);
+    fishingPullsLeft = fishingPullCount(caught);
+    message.textContent = biteMessage(caught, fishingPullsLeft);
+    button.textContent = pullButtonText();
     button.disabled = false;
     pendingCatch = caught;
   }, 900 + Math.random() * 700);
+}
+
+function pullFishingLine() {
+  const message = document.getElementById("fishing-message");
+  const button = document.getElementById("fish-button");
+  const stage = document.getElementById("fishing-stage");
+  fishingPullsLeft -= 1;
+  stage.classList.remove("is-pulled");
+  void stage.offsetWidth;
+  stage.classList.add("is-pulled");
+  if (fishingPullsLeft <= 0) {
+    finishFishing(pendingCatch);
+    return;
+  }
+  message.textContent = pullMessage(fishingPullsLeft);
+  button.textContent = pullButtonText();
 }
 
 function finishFishing(caught) {
   const message = document.getElementById("fishing-message");
   const button = document.getElementById("fish-button");
   const stage = document.getElementById("fishing-stage");
-  stage.classList.remove("is-biting");
+  stage.classList.remove("is-biting", "is-pulled", "is-rare", "is-super", "is-legend");
   stage.querySelector(".splash")?.remove();
   state.fish[caught.id] = (state.fish[caught.id] || 0) + 1;
   message.textContent = isRareFish(caught) ? `${caught.name} だ！やったね！` : `${caught.name} がつれた！`;
@@ -977,10 +994,47 @@ function finishFishing(caught) {
   button.textContent = "つる";
   fishingBusy = false;
   pendingCatch = null;
+  fishingPullsLeft = 0;
 }
 
 function isRareFish(item) {
   return item.rarity === "レア" || item.rarity === "スーパー レア" || item.rarity === "でんせつ";
+}
+
+function fishingPullCount(item) {
+  if (item.rarity === "でんせつ") return 4;
+  if (item.rarity === "スーパー レア") return 3;
+  if (item.rarity === "レア") return 2;
+  return 1;
+}
+
+function applyFishingRarityClass(stage, item) {
+  if (item.rarity === "でんせつ") {
+    stage.classList.add("is-legend");
+    return;
+  }
+  if (item.rarity === "スーパー レア") {
+    stage.classList.add("is-super");
+    return;
+  }
+  if (item.rarity === "レア") stage.classList.add("is-rare");
+}
+
+function biteMessage(item, pullsLeft) {
+  if (item.rarity === "でんせつ") return `ものすごい ひきだ！あと ${pullsLeft}かい！`;
+  if (item.rarity === "スーパー レア") return `すごい ひきだ！あと ${pullsLeft}かい！`;
+  if (item.rarity === "レア") return `おおきな ひきだ！あと ${pullsLeft}かい！`;
+  return "きた！ひっぱれ！";
+}
+
+function pullMessage(pullsLeft) {
+  if (pullsLeft >= 3) return `まだまだ！あと ${pullsLeft}かい！`;
+  if (pullsLeft === 2) return "つよいぞ！あと 2かい！";
+  return "あとすこし！もう 1かい！";
+}
+
+function pullButtonText() {
+  return fishingPullsLeft > 1 ? `ひっぱる ${fishingPullsLeft}` : "ひっぱる";
 }
 
 function pickFish() {
