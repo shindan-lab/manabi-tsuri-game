@@ -71,7 +71,7 @@ const romajiLevels = [
   [["あかちゃん", "akachan"], ["らっぱ", "rappa"], ["きって", "kitte"], ["でんしゃ", "densha"], ["きんぎょ", "kingyo"]],
   [["あさ", "asa"], ["うみ", "umi"], ["かさ", "kasa"], ["ほし", "hoshi"], ["ゆき", "yuki"]],
   [["すいか", "suika"], ["たいこ", "taiko"], ["らっぱ", "rappa"], ["きって", "kitte"], ["がっこう", "gakkou"]],
-  [["オーストラリア", "oosutoraria"], ["うんどうかい", "undoukai"], ["たんじょうび", "tanjoubi"], ["しょうがっこう", "shougakkou"], ["かいすいよく", "kaisuiyoku"]],
+  [["オーストラリア", "o-sutoraria"], ["うんどうかい", "undoukai"], ["たんじょうび", "tanjoubi"], ["しょうがっこう", "shougakkou"], ["かいすいよく", "kaisuiyoku"]],
 ];
 
 const clockLevels = [
@@ -417,10 +417,8 @@ function romajiWordVariants(word) {
     kyo: ["kyo", "kilyo"],
     ppa: ["ppa", "ltupa", "xtupa"],
     tte: ["tte", "ltute", "xtute"],
-    kou: ["kou", "koo"],
-    kyou: ["kyou", "kyoo"],
-    shou: ["shou", "syou", "shoo", "syoo"],
-    ou: ["ou", "oo"],
+    kkou: ["kkou", "ltukou", "xtukou"],
+    shou: ["shou", "syou"],
     wo: ["wo"],
   };
   let variants = [word];
@@ -432,10 +430,31 @@ function romajiWordVariants(word) {
     }
     variants = [...next];
   }
+  variants = addDoubleNVariants(variants);
   if (word.endsWith("n")) {
     variants.push(`${word}n`);
   }
   return [...new Set(variants)];
+}
+
+function addDoubleNVariants(words) {
+  const consonantAfterN = /n(?=[bcdfghjklmpqrstvzw])/g;
+  const variants = new Set(words);
+  for (const word of words) {
+    const matches = [...word.matchAll(consonantAfterN)];
+    for (let mask = 1; mask < 2 ** matches.length; mask += 1) {
+      let result = "";
+      let last = 0;
+      matches.forEach((match, index) => {
+        result += word.slice(last, match.index);
+        result += mask & (1 << index) ? "nn" : "n";
+        last = match.index + 1;
+      });
+      result += word.slice(last);
+      variants.add(result);
+    }
+  }
+  return [...variants];
 }
 
 function combineVariants(groups) {
@@ -451,7 +470,7 @@ function combineVariants(groups) {
 }
 
 function normalizeAnswer(value) {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
+  return value.trim().toLowerCase().replace(/[‐‑‒–—―−ー]/g, "-").replace(/\s+/g, " ");
 }
 
 function rand(min, max) {
