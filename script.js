@@ -322,9 +322,17 @@ const fishList = [
   fish("rare_ishidai", "しましまイシダイ", "レア", "#d7d2c6", 7, 0.045, "./assets/fish/rare_ishidai.png"),
   fish("rare_tobiuo", "あおぞらトビウオ", "レア", "#5cc8ff", 8, 0.04, "./assets/fish/rare_tobiuo.png"),
   fish("rare_kingyo", "こがねキンギョ", "レア", "#f6c445", 8, 0.035, "./assets/fish/rare_kingyo.png"),
+  fish("rare_fugu", "さくらフグ", "レア", "#ff9fc4", 6, 0.045, "./assets/fish/rare_fugu.png"),
+  fish("rare_unagi", "よぞらウナギ", "レア", "#4969c9", 7, 0.04, "./assets/fish/rare_unagi.png"),
+  fish("super_manta", "ほしぞらマンタ", "スーパー レア", "#6c7fd8", 8, 0.028, "./assets/fish/super_manta.png"),
+  fish("super_shark", "ぎんがザメ", "スーパー レア", "#7b8ca8", 9, 0.022, "./assets/fish/super_shark.png"),
+  fish("super_salmon", "オーロラサケ", "スーパー レア", "#ff8fb3", 9, 0.02, "./assets/fish/super_salmon.png"),
+  fish("super_kurage", "ひかりクラゲ", "スーパー レア", "#8be8ff", 8, 0.024, "./assets/fish/super_kurage.png"),
   fish("legend_koi", "にじいろコイ", "でんせつ", "#f6a6c9", 9, 0.025, "./assets/fish/legend_koi.png"),
   fish("legend_tai", "おうごんタイ", "でんせつ", "#ffd166", 10, 0.02, "./assets/fish/legend_tai.png"),
   fish("legend_coelacanth", "まぼろしシーラカンス", "でんせつ", "#5f6caf", 10, 0.015, "./assets/fish/legend_coelacanth.png"),
+  fish("legend_maguro", "おうじゃマグロ", "でんせつ", "#2f6fb4", 10, 0.014, "./assets/fish/legend_maguro.png"),
+  fish("legend_ryugu", "りゅうぐうのつかい", "でんせつ", "#f2f0ff", 10, 0.01, "./assets/fish/legend_ryugu.png"),
 ];
 
 let state = loadState();
@@ -972,7 +980,7 @@ function finishFishing(caught) {
 }
 
 function isRareFish(item) {
-  return item.rarity === "レア" || item.rarity === "でんせつ";
+  return item.rarity === "レア" || item.rarity === "スーパー レア" || item.rarity === "でんせつ";
 }
 
 function pickFish() {
@@ -997,6 +1005,7 @@ function fishDrawWeight(item) {
   if (item.rarity === "よくでる") return item.weight * 8;
   if (item.rarity === "たまにでる") return item.weight * 6;
   if (item.rarity === "レア") return item.weight * 2;
+  if (item.rarity === "スーパー レア") return item.weight * 1.7;
   return item.weight * 1.5;
 }
 
