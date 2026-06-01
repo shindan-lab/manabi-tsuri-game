@@ -69,53 +69,13 @@ button:disabled {
 .title-logo {
   position: relative;
   max-width: 620px;
-  isolation: isolate;
-  padding: 24px 30px 30px;
-  border: 5px solid #243447;
-  border-radius: 8px;
-  background:
-    radial-gradient(circle at 88% 20%, rgba(255, 243, 156, 0.98) 0 2.1rem, transparent 2.2rem),
-    radial-gradient(circle at 13% 80%, rgba(255, 255, 255, 0.72) 0 3.6rem, transparent 3.7rem),
-    linear-gradient(135deg, #25b2d2 0%, #68d7ea 38%, #ffe187 39%, #fff3b8 62%, #f49a47 63%, #f16958 100%);
-  box-shadow:
-    0 9px 0 #176b84,
-    0 16px 0 rgba(36, 52, 71, 0.16),
-    0 22px 34px rgba(61, 101, 124, 0.22);
-  transform: rotate(-1deg);
+  filter: drop-shadow(0 16px 16px rgba(61, 101, 124, 0.22));
 }
 
-.title-logo::before,
-.title-logo::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-
-.title-logo::before {
-  left: 18px;
-  right: 18px;
-  bottom: 14px;
-  height: 34px;
-  border: 4px solid #243447;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 18% 45%, #ffffff 0 0.55rem, transparent 0.6rem),
-    radial-gradient(circle at 72% 55%, #ffffff 0 0.45rem, transparent 0.5rem),
-    repeating-linear-gradient(90deg, #1b9ed0 0 36px, #37c4e6 36px 72px);
-  opacity: 0.96;
-  z-index: -1;
-}
-
-.title-logo::after {
-  right: 34px;
-  top: 24px;
-  width: 76px;
-  height: 42px;
-  border: 5px solid #243447;
-  border-left: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  transform: rotate(-12deg);
+.title-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .eyebrow {
@@ -125,20 +85,6 @@ button:disabled {
   font-weight: 800;
 }
 
-.title-logo .eyebrow {
-  display: inline-block;
-  margin-bottom: 8px;
-  padding: 5px 12px;
-  border: 3px solid #243447;
-  border-radius: 999px;
-  background: #fff;
-  color: #22765b;
-  font-size: 1rem;
-  font-weight: 900;
-  box-shadow: 0 4px 0 rgba(36, 52, 71, 0.16);
-  transform: rotate(-2deg);
-}
-
 h1,
 h2,
 p {
@@ -146,20 +92,12 @@ p {
 }
 
 h1 {
-  position: relative;
-  margin-bottom: 12px;
-  color: #fff9cf;
-  font-size: 4.35rem;
-  line-height: 0.98;
-  letter-spacing: 0;
-  text-shadow:
-    0 4px 0 #243447,
-    4px 0 0 #243447,
-    -4px 0 0 #243447,
-    0 -4px 0 #243447,
-    4px 5px 0 #f16958,
-    0 10px 14px rgba(36, 52, 71, 0.34);
-  transform: rotate(1deg);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 h2 {
@@ -167,20 +105,6 @@ h2 {
   font-size: 1.45rem;
   line-height: 1.2;
   letter-spacing: 0;
-}
-
-.lead {
-  position: relative;
-  display: inline-block;
-  margin: 0;
-  padding: 7px 14px;
-  border: 3px solid #243447;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: #176b84;
-  font-size: 1.1rem;
-  font-weight: 900;
-  box-shadow: 0 4px 0 rgba(36, 52, 71, 0.18);
 }
 
 .stage {
