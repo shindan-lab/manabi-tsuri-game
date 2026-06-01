@@ -69,13 +69,19 @@ button:disabled {
 .title-logo {
   position: relative;
   max-width: 620px;
-  padding: 22px 24px 26px;
-  border: 4px solid #3ea67a;
+  isolation: isolate;
+  padding: 24px 30px 30px;
+  border: 5px solid #243447;
   border-radius: 8px;
   background:
-    radial-gradient(circle at 90% 16%, rgba(246, 196, 69, 0.42), transparent 4.5rem),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 248, 232, 0.86));
-  box-shadow: 0 14px 0 rgba(47, 155, 114, 0.18), 0 16px 28px rgba(61, 101, 124, 0.14);
+    radial-gradient(circle at 88% 20%, rgba(255, 243, 156, 0.98) 0 2.1rem, transparent 2.2rem),
+    radial-gradient(circle at 13% 80%, rgba(255, 255, 255, 0.72) 0 3.6rem, transparent 3.7rem),
+    linear-gradient(135deg, #25b2d2 0%, #68d7ea 38%, #ffe187 39%, #fff3b8 62%, #f49a47 63%, #f16958 100%);
+  box-shadow:
+    0 9px 0 #176b84,
+    0 16px 0 rgba(36, 52, 71, 0.16),
+    0 22px 34px rgba(61, 101, 124, 0.22);
+  transform: rotate(-1deg);
 }
 
 .title-logo::before,
@@ -86,24 +92,30 @@ button:disabled {
 }
 
 .title-logo::before {
-  right: 28px;
-  bottom: 24px;
-  width: 72px;
-  height: 38px;
-  border: 5px solid #2889c9;
-  border-left: 0;
-  border-radius: 50%;
-  transform: rotate(-10deg);
+  left: 18px;
+  right: 18px;
+  bottom: 14px;
+  height: 34px;
+  border: 4px solid #243447;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 18% 45%, #ffffff 0 0.55rem, transparent 0.6rem),
+    radial-gradient(circle at 72% 55%, #ffffff 0 0.45rem, transparent 0.5rem),
+    repeating-linear-gradient(90deg, #1b9ed0 0 36px, #37c4e6 36px 72px);
+  opacity: 0.96;
+  z-index: -1;
 }
 
 .title-logo::after {
-  right: 92px;
-  bottom: 34px;
-  width: 24px;
-  height: 24px;
-  border-left: 5px solid #2889c9;
-  border-bottom: 5px solid #2889c9;
-  transform: rotate(45deg);
+  right: 34px;
+  top: 24px;
+  width: 76px;
+  height: 42px;
+  border: 5px solid #243447;
+  border-left: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  transform: rotate(-12deg);
 }
 
 .eyebrow {
@@ -113,6 +125,20 @@ button:disabled {
   font-weight: 800;
 }
 
+.title-logo .eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 5px 12px;
+  border: 3px solid #243447;
+  border-radius: 999px;
+  background: #fff;
+  color: #22765b;
+  font-size: 1rem;
+  font-weight: 900;
+  box-shadow: 0 4px 0 rgba(36, 52, 71, 0.16);
+  transform: rotate(-2deg);
+}
+
 h1,
 h2,
 p {
@@ -120,10 +146,20 @@ p {
 }
 
 h1 {
-  margin-bottom: 10px;
-  font-size: 4.1rem;
-  line-height: 1;
+  position: relative;
+  margin-bottom: 12px;
+  color: #fff9cf;
+  font-size: 4.35rem;
+  line-height: 0.98;
   letter-spacing: 0;
+  text-shadow:
+    0 4px 0 #243447,
+    4px 0 0 #243447,
+    -4px 0 0 #243447,
+    0 -4px 0 #243447,
+    4px 5px 0 #f16958,
+    0 10px 14px rgba(36, 52, 71, 0.34);
+  transform: rotate(1deg);
 }
 
 h2 {
@@ -134,9 +170,17 @@ h2 {
 }
 
 .lead {
-  color: var(--muted);
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 7px 14px;
+  border: 3px solid #243447;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #176b84;
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 900;
+  box-shadow: 0 4px 0 rgba(36, 52, 71, 0.18);
 }
 
 .stage {
