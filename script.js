@@ -4,12 +4,12 @@ const STORAGE_KEY = "manabi-tsuri-save-v1";
 const TEST_MODE = new URLSearchParams(location.search).get("test") === "1";
 
 const subjectInfo = {
-  math: { label: "さんすう", icon: "+", progressKey: "math" },
-  roma: { label: "ローマじ", icon: "A", progressKey: "roma" },
-  word: { label: "とけい", icon: "と", progressKey: "word" },
-  world: { label: "えいご・せかい", icon: "E", progressKey: "world" },
-  animal: { label: "いきもの", icon: "む", progressKey: "animal" },
-  quiz: { label: "なぞなぞ", icon: "?", progressKey: "quiz" },
+  math: { label: "さんすう", icon: "🧮", progressKey: "math" },
+  roma: { label: "ローマじ", icon: "⌨️", progressKey: "roma" },
+  word: { label: "とけい", icon: "🕒", progressKey: "word" },
+  world: { label: "えいご・せかい", icon: "🌎", progressKey: "world" },
+  animal: { label: "いきもの", icon: "🦋", progressKey: "animal" },
+  quiz: { label: "なぞなぞ", icon: "💡", progressKey: "quiz" },
 };
 
 const places = [
@@ -73,7 +73,7 @@ const lookInfo = {
       { value: "1", label: "こども", level: 1 },
       { value: "5", label: "わかもの", level: 5, needs: 4 },
       { value: "9", label: "せいねん", level: 9, needs: 8 },
-      { value: "10", label: "おじいちゃん", level: 10, allMax: true },
+      { value: "10", label: "おじいちゃん", level: 10, needs: 10 },
     ],
   },
   blue: {
@@ -756,7 +756,7 @@ function renderSubjectPicker() {
   picker.innerHTML = Object.entries(subjectInfo)
     .map(([key, info]) => `
       <button class="subject-choice ${key === activeSubject ? "is-active" : ""}" data-subject="${key}">
-        ${info.icon} ${info.label}
+        <strong><span class="pick-icon">${info.icon}</span>${info.label}</strong>
         <span>いま れべる ${state.levels[key]}</span>
       </button>
     `)
