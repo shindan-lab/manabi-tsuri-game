@@ -787,8 +787,9 @@ function renderLevelPicker() {
 function setView(view) {
   document.querySelectorAll(".view").forEach((el) => el.classList.remove("is-active"));
   document.getElementById(`${view}-view`).classList.add("is-active");
+  const tabView = view === "look" ? "home" : view;
   document.querySelectorAll(".tab").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.view === view);
+    button.classList.toggle("is-active", button.dataset.view === tabView);
   });
 }
 
@@ -1291,6 +1292,12 @@ document.addEventListener("click", (event) => {
   const go = event.target.closest("[data-go]");
   if (go) setView(go.dataset.go);
 
+  const homeSubject = event.target.closest("[data-home-subject]");
+  if (homeSubject) {
+    setView("study");
+    startQuiz(homeSubject.dataset.homeSubject);
+  }
+
   const subject = event.target.closest("[data-subject]");
   if (subject) startQuiz(subject.dataset.subject);
 
@@ -1366,6 +1373,13 @@ document.querySelectorAll(".reset-control").forEach((control) => control.addEven
 }));
 
 document.addEventListener("keydown", (event) => {
+  const homeSubject = event.target.closest?.("[data-home-subject]");
+  if ((event.key === "Enter" || event.key === " ") && homeSubject) {
+    event.preventDefault();
+    setView("study");
+    startQuiz(homeSubject.dataset.homeSubject);
+    return;
+  }
   if (event.key !== "Enter") return;
   if (document.getElementById("study-view").classList.contains("is-active")) {
     if (!document.getElementById("check-answer").hidden) checkAnswer();
