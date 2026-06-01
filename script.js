@@ -151,7 +151,7 @@ const clockLevels = [
   [clockQ(1, 5), clockQ(2, 10), clockQ(3, 20), clockQ(4, 25), clockQ(5, 55)],
   [clockQ(8, 10), clockQ(9, 25), clockQ(10, 35), clockQ(11, 40), clockQ(12, 50)],
   [clockQ(2, 0, "この とけいの 1じかんごは？", 3, 0), clockQ(4, 30, "この とけいの 1じかんごは？", 5, 30), clockQ(6, 15, "この とけいの 1じかんごは？", 7, 15), clockQ(8, 45, "この とけいの 1じかんごは？", 9, 45), clockQ(10, 20, "この とけいの 1じかんごは？", 11, 20)],
-  [clockQ(6, 0, "あさの つりは？"), clockQ(12, 0, "おひるの つりは？"), clockQ(3, 30, "おやつの じかんは？"), clockQ(5, 0, "ゆうがたの つりは？"), clockQ(7, 30, "よるの じかんは？")],
+  [clockInputQ(6, 5), clockInputQ(12, 10), clockInputQ(3, 35), clockInputQ(5, 45), clockInputQ(7, 50)],
 ];
 
 const worldLevels = [
@@ -292,11 +292,11 @@ const animalLevels = [
     qChoice("この とくちょうの いきものは どれかな？", "からだに とげが ある ちいさな いきものだよ", ["ハリネズミ", "うし", "きりん", "さる"], "ハリネズミ"),
   ],
   [
-    qChoice("この いきものの せつめいで ただしいのは どれ？", "くじらは うみに いるけれど、さかなでは ないよ", ["ほにゅうるい", "むし", "とり", "はな"], "ほにゅうるい"),
-    qChoice("この いきものの せつめいで ただしいのは どれ？", "こうもりは そらを とぶけれど、とりでは ないよ", ["そらを とぶ ほにゅうるい", "さかな", "むし", "かえる"], "そらを とぶ ほにゅうるい"),
-    qChoice("この いきものの せつめいで ただしいのは どれ？", "たこは うみの なかで くらしているよ", ["あしが 8ほん", "はねが 4まい", "くびが ながい", "こうらが ある"], "あしが 8ほん"),
-    qChoice("この いきものの せつめいで ただしいのは どれ？", "いるかは うみで およぐけれど、いきつぎを するよ", ["うみで いきをする", "きに のぼる", "つのが ある", "はなを すう"], "うみで いきをする"),
-    qChoice("この いきものの せつめいで ただしいのは どれ？", "くらげは うみで ふわふわ うかんでいるよ", ["からだが やわらかい", "つのが ある", "あしが 2ほん", "そらを とぶ"], "からだが やわらかい"),
+    qChoice("この いきものの せつめいで ただしいのは どれ？", "くじら", ["ほにゅうるい", "ぎょるい", "とり", "こうかくるい"], "ほにゅうるい"),
+    qChoice("この いきものの せつめいで ただしいのは どれ？", "こうもり", ["ほにゅうるい", "とり", "むし", "ぎょるい"], "ほにゅうるい"),
+    qChoice("この いきものの せつめいで ただしいのは どれ？", "たこ", ["あしが 8ほん", "あしが 6ぽん", "からが ある", "はねが ある"], "あしが 8ほん"),
+    qChoice("この いきものの せつめいで ただしいのは どれ？", "いるか", ["ほにゅうるい", "ぎょるい", "とり", "むし"], "ほにゅうるい"),
+    qChoice("この いきものの せつめいで ただしいのは どれ？", "くらげ", ["からだが やわらかい", "こうらが ある", "あしが 4ほん", "つのが ある"], "からだが やわらかい"),
   ],
 ];
 
@@ -428,10 +428,39 @@ function clockQ(hour, minute, prompt = "この とけいは？", answerHour = ho
   };
 }
 
+function clockInputQ(hour, minute) {
+  const answer = timeLabel(hour, minute);
+  return {
+    type: "clockInput",
+    prompt: "この とけいは なんじなんぷん？",
+    topic: clockSvg(hour, minute),
+    answer,
+    answers: clockAnswerVariants(hour, minute),
+    hint: "れい 7:30",
+  };
+}
+
 function timeLabel(hour, minute) {
   if (minute === 0) return `${hour}じ`;
   if (minute === 30) return `${hour}じはん`;
   return `${hour}じ${minute}ふん`;
+}
+
+function clockAnswerVariants(hour, minute) {
+  const minuteText = String(minute).padStart(2, "0");
+  const values = [
+    timeLabel(hour, minute),
+    `${hour}:${minuteText}`,
+    `${hour}:${minute}`,
+    `${hour} ${minute}`,
+    `${hour}じ${minute}`,
+    `${hour}じ${minute}ぷん`,
+    `${hour}じ${minuteText}ふん`,
+    `${hour}じ${minuteText}ぷん`,
+  ];
+  if (minute === 0) values.push(`${hour}:00`, `${hour}じ0ふん`, `${hour}じ00ふん`);
+  if (minute === 30) values.push(`${hour}じ30ぷん`, `${hour}じはん`);
+  return values.map(normalizeAnswer);
 }
 
 function timeChoices(hour, minute) {
@@ -939,8 +968,8 @@ function renderQuestion() {
   document.getElementById("quiz-subtitle").textContent = subjectInfo[quiz.subject].label;
   document.getElementById("quiz-title").textContent = `れべる ${quiz.level}`;
   document.getElementById("question-count").textContent = quiz.index + 1;
-  const guide = q.type === "clock" || q.type === "choice" ? q.prompt : q.topic || questionGuide(quiz.subject);
-  const prompt = q.type === "clock" || q.type === "choice" && q.topic ? q.topic : q.prompt;
+  const guide = q.type === "clock" || q.type === "clockInput" || q.type === "choice" ? q.prompt : q.topic || questionGuide(quiz.subject);
+  const prompt = q.type === "clock" || q.type === "clockInput" || q.type === "choice" && q.topic ? q.topic : q.prompt;
   document.getElementById("question-guide").textContent = guide;
   document.getElementById("question-box").innerHTML = q.hint ? `${prompt}<br><small>${q.hint}</small>` : prompt;
   document.getElementById("feedback").textContent = "";
@@ -951,7 +980,8 @@ function renderQuestion() {
   if (q.type === "choice" || q.type === "clock") {
     answerBox.innerHTML = `<div class="choice-grid">${shuffle(q.choices).map((choice) => `<button class="choice" data-choice="${choice}">${choice}</button>`).join("")}</div>`;
   } else {
-    answerBox.innerHTML = `<input id="answer-input" class="answer-input" inputmode="${q.type === "number" ? "numeric" : "latin"}" autocomplete="off" />`;
+    const inputMode = q.type === "number" || q.type === "clockInput" ? "numeric" : "latin";
+    answerBox.innerHTML = `<input id="answer-input" class="answer-input" inputmode="${inputMode}" autocomplete="off" />`;
     document.getElementById("answer-input").focus();
   }
 }
