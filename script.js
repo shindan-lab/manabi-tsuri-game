@@ -957,8 +957,8 @@ function goFishing() {
     stage.appendChild(splash);
     applyFishingRarityClass(stage, caught);
     fishingPullsLeft = fishingPullCount(caught);
-    message.textContent = biteMessage(caught, fishingPullsLeft);
-    button.textContent = pullButtonText();
+    message.textContent = biteMessage(caught);
+    button.textContent = "ひっぱる";
     button.disabled = false;
     pendingCatch = caught;
   }, 900 + Math.random() * 700);
@@ -977,7 +977,7 @@ function pullFishingLine() {
     return;
   }
   message.textContent = pullMessage(fishingPullsLeft);
-  button.textContent = pullButtonText();
+  button.textContent = "ひっぱる";
 }
 
 function finishFishing(caught) {
@@ -1020,21 +1020,17 @@ function applyFishingRarityClass(stage, item) {
   if (item.rarity === "レア") stage.classList.add("is-rare");
 }
 
-function biteMessage(item, pullsLeft) {
-  if (item.rarity === "でんせつ") return `ものすごい ひきだ！あと ${pullsLeft}かい！`;
-  if (item.rarity === "スーパー レア") return `すごい ひきだ！あと ${pullsLeft}かい！`;
-  if (item.rarity === "レア") return `おおきな ひきだ！あと ${pullsLeft}かい！`;
+function biteMessage(item) {
+  if (item.rarity === "でんせつ") return "ものすごい ひきだ！かなり おおものだ！";
+  if (item.rarity === "スーパー レア") return "すごい ひきだ！がんばれ！";
+  if (item.rarity === "レア") return "おおきな ひきだ！ひっぱれ！";
   return "きた！ひっぱれ！";
 }
 
 function pullMessage(pullsLeft) {
-  if (pullsLeft >= 3) return `まだまだ！あと ${pullsLeft}かい！`;
-  if (pullsLeft === 2) return "つよいぞ！あと 2かい！";
-  return "あとすこし！もう 1かい！";
-}
-
-function pullButtonText() {
-  return fishingPullsLeft > 1 ? `ひっぱる ${fishingPullsLeft}` : "ひっぱる";
+  if (pullsLeft >= 3) return "まだまだ！ぜんぜん あがらない！";
+  if (pullsLeft === 2) return "つよいぞ！かなり おおものだ！";
+  return "あとすこし！まだ ひっぱれ！";
 }
 
 function pickFish() {
@@ -1179,9 +1175,14 @@ document.querySelectorAll(".reset-control").forEach((control) => control.addEven
 }));
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && document.getElementById("study-view").classList.contains("is-active")) {
+  if (event.key !== "Enter") return;
+  if (document.getElementById("study-view").classList.contains("is-active")) {
     if (!document.getElementById("check-answer").hidden) checkAnswer();
     else if (!document.getElementById("next-question").hidden) nextQuestion();
+  }
+  if (document.getElementById("fish-view").classList.contains("is-active")) {
+    const button = document.getElementById("fish-button");
+    if (!button.disabled) goFishing();
   }
 });
 
