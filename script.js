@@ -601,27 +601,21 @@ function renderAvatar() {
   const quizBuddy = document.getElementById("quiz-buddy");
   avatar.innerHTML = `
     <img class="character-sprite hero-sprite" src="${snapshot.hero.src}" alt="しゅじんこう" />
-    <span class="sprite-level">L${snapshot.hero.level}</span>
   `;
   redBuddy.innerHTML = `
     <img class="character-sprite red-buddy-sprite" src="${snapshot.red.src}" alt="とけいのあいぼう" />
-    <span class="sprite-level buddy-level">L${snapshot.red.level}</span>
   `;
   buddy.innerHTML = `
     <img class="character-sprite buddy-sprite" src="${snapshot.blue.src}" alt="ローマじのあいぼう" />
-    <span class="sprite-level buddy-level">L${snapshot.blue.level}</span>
   `;
   worldBuddy.innerHTML = `
     <img class="character-sprite world-buddy-sprite" src="${snapshot.world.src}" alt="せかいのあいぼう" />
-    <span class="sprite-level buddy-level">L${snapshot.world.level}</span>
   `;
   animalBuddy.innerHTML = `
     <img class="character-sprite animal-buddy-sprite" src="${snapshot.animal.src}" alt="いきもののあいぼう" />
-    <span class="sprite-level buddy-level">L${snapshot.animal.level}</span>
   `;
   quizBuddy.innerHTML = `
     <img class="character-sprite quiz-buddy-sprite" src="${snapshot.quiz.src}" alt="なぞなぞのあいぼう" />
-    <span class="sprite-level buddy-level">L${snapshot.quiz.level}</span>
   `;
 }
 

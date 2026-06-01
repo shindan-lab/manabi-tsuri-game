@@ -217,30 +217,30 @@ h2 {
 
 .avatar {
   left: 50%;
-  bottom: 14px;
-  width: 154px;
-  height: 204px;
+  bottom: 6px;
+  width: 180px;
+  height: 236px;
   transform: translateX(-50%);
 }
 
 .buddy {
-  bottom: 22px;
-  width: 104px;
-  height: 124px;
+  bottom: 18px;
+  width: 122px;
+  height: 148px;
 }
 
 .buddy--left {
-  left: 13%;
-  bottom: 20px;
-  width: 108px;
-  height: 128px;
+  left: 10%;
+  bottom: 12px;
+  width: 132px;
+  height: 158px;
 }
 
 .buddy--right {
-  right: 15%;
-  bottom: 12px;
-  width: 96px;
-  height: 116px;
+  right: 11%;
+  bottom: 8px;
+  width: 124px;
+  height: 150px;
 }
 
 .buddy--back-left,
@@ -251,25 +251,25 @@ h2 {
 }
 
 .buddy--back-left {
-  left: 5%;
-  bottom: 118px;
-  width: 82px;
-  height: 100px;
+  left: 3%;
+  bottom: 112px;
+  width: 112px;
+  height: 136px;
 }
 
 .buddy--back-center {
   left: 50%;
-  bottom: 210px;
-  width: 68px;
-  height: 78px;
+  bottom: 204px;
+  width: 94px;
+  height: 108px;
   transform: translateX(-50%);
 }
 
 .buddy--back-right {
-  right: 5%;
-  bottom: 130px;
-  width: 82px;
-  height: 100px;
+  right: 3%;
+  bottom: 120px;
+  width: 112px;
+  height: 136px;
 }
 
 .character-sprite {
@@ -296,28 +296,6 @@ h2 {
 .animal-buddy-sprite,
 .quiz-buddy-sprite {
   transform-origin: 50% 100%;
-}
-
-.sprite-level {
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
-  display: grid;
-  place-items: center;
-  min-width: 36px;
-  height: 26px;
-  padding: 0 8px;
-  border: 2px solid #243447;
-  border-radius: 999px;
-  background: #fff;
-  color: #243447;
-  font-size: 0.78rem;
-  font-weight: 900;
-  transform: translateX(-50%);
-}
-
-.buddy-level {
-  bottom: 0;
 }
 
 .person {
@@ -1466,47 +1444,47 @@ h2 {
   }
 
   .avatar {
-    width: 122px;
-    height: 168px;
+    width: 138px;
+    height: 190px;
   }
 
   .buddy,
   .buddy--right {
-    width: 76px;
-    height: 96px;
+    width: 88px;
+    height: 112px;
   }
 
   .buddy--left {
-    left: 6%;
-    bottom: 18px;
-    width: 80px;
-    height: 100px;
+    left: 4%;
+    bottom: 14px;
+    width: 92px;
+    height: 116px;
   }
 
   .buddy--right {
-    right: 7%;
-    bottom: 14px;
+    right: 5%;
+    bottom: 12px;
   }
 
   .buddy--back-left,
   .buddy--back-right {
-    bottom: 166px;
-    width: 58px;
-    height: 74px;
+    bottom: 156px;
+    width: 70px;
+    height: 90px;
   }
 
   .buddy--back-left {
-    left: 4%;
+    left: 2%;
   }
 
   .buddy--back-right {
-    right: 4%;
+    right: 2%;
   }
 
   .buddy--back-center {
     left: 50%;
-    bottom: 286px;
-    width: 54px;
-    height: 62px;
+    bottom: 272px;
+    width: 68px;
+    height: 78px;
   }
 }
