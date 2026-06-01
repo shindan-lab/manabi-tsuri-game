@@ -64,6 +64,70 @@ const buddyColors = [
   "#fff176",
 ];
 
+const lookInfo = {
+  hero: {
+    label: "しゅじんこう",
+    subject: "math",
+    asset: heroAsset,
+    options: [
+      { value: "1", label: "こども", level: 1 },
+      { value: "5", label: "わかもの", level: 5, needs: 4 },
+      { value: "9", label: "せいねん", level: 9, needs: 8 },
+      { value: "10", label: "おじいちゃん", level: 10, allMax: true },
+    ],
+  },
+  blue: {
+    label: "あおいあいぼう",
+    subject: "roma",
+    asset: buddyAsset,
+    options: [
+      { value: "1", label: "ちいさい", level: 1 },
+      { value: "5", label: "つよい", level: 5, needs: 4 },
+      { value: "10", label: "さいこう", level: 10, needs: 8 },
+    ],
+  },
+  red: {
+    label: "あかいあいぼう",
+    subject: "word",
+    asset: redBuddyAsset,
+    options: [
+      { value: "1", label: "ちいさい", level: 1 },
+      { value: "5", label: "つよい", level: 5, needs: 4 },
+      { value: "10", label: "さいこう", level: 10, needs: 8 },
+    ],
+  },
+  world: {
+    label: "しろいあいぼう",
+    subject: "world",
+    asset: worldBuddyAsset,
+    options: [
+      { value: "1", label: "ちいさい", level: 1 },
+      { value: "5", label: "つよい", level: 5, needs: 4 },
+      { value: "10", label: "さいこう", level: 10, needs: 8 },
+    ],
+  },
+  animal: {
+    label: "みどりのあいぼう",
+    subject: "animal",
+    asset: animalBuddyAsset,
+    options: [
+      { value: "1", label: "ちいさい", level: 1 },
+      { value: "5", label: "つよい", level: 5, needs: 4 },
+      { value: "10", label: "さいこう", level: 10, needs: 8 },
+    ],
+  },
+  quiz: {
+    label: "きいろのあいぼう",
+    subject: "quiz",
+    asset: quizBuddyAsset,
+    options: [
+      { value: "1", label: "ちいさい", level: 1 },
+      { value: "5", label: "つよい", level: 5, needs: 4 },
+      { value: "10", label: "さいこう", level: 10, needs: 8 },
+    ],
+  },
+};
+
 const romajiLevels = [
   [["あ", "a"], ["い", "i"], ["う", "u"], ["え", "e"], ["お", "o"]],
   [["か", "ka"], ["さ", "sa"], ["た", "ta"], ["な", "na"], ["は", "ha"]],
@@ -446,6 +510,7 @@ function fish(id, name, rarity, color, minLevel, weight, image = "") {
 function defaultState() {
   return {
     levels: defaultLevels(),
+    looks: defaultLooks(),
     tickets: 0,
     bait: 0,
     fish: {},
@@ -456,6 +521,10 @@ function defaultLevels() {
   return Object.fromEntries(Object.keys(subjectInfo).map((key) => [key, 1]));
 }
 
+function defaultLooks() {
+  return Object.fromEntries(Object.keys(lookInfo).map((key) => [key, "auto"]));
+}
+
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
@@ -463,6 +532,7 @@ function loadState() {
       ...defaultState(),
       ...saved,
       levels: { ...defaultLevels(), ...(saved.levels || {}) },
+      looks: { ...defaultLooks(), ...(saved.looks || {}) },
     };
   } catch {
     return defaultState();
@@ -485,6 +555,7 @@ function render() {
   renderAvatar();
   renderStatus();
   renderHome();
+  renderLookPicker();
   renderSubjectPicker();
   renderLevelPicker();
   renderFishBook();
@@ -526,6 +597,14 @@ function renderAvatar() {
 }
 
 function avatarSnapshot() {
+  return buildAvatarSnapshot(false);
+}
+
+function progressSnapshot() {
+  return buildAvatarSnapshot(true);
+}
+
+function buildAvatarSnapshot(ignoreLooks) {
   const math = clampLevel(state.levels.math);
   const roma = clampLevel(state.levels.roma);
   const word = clampLevel(state.levels.word);
@@ -534,14 +613,35 @@ function avatarSnapshot() {
   const quizLevel = clampLevel(state.levels.quiz);
   const elder = Object.values(state.levels).every((level) => level === MAX_LEVEL);
   const heroLevel = elder ? 10 : Math.min(9, math);
+  const heroLook = ignoreLooks ? heroLevel : selectedLookLevel("hero", heroLevel);
+  const blueLook = ignoreLooks ? roma : selectedLookLevel("blue", roma);
+  const redLook = ignoreLooks ? word : selectedLookLevel("red", word);
+  const worldLook = ignoreLooks ? world : selectedLookLevel("world", world);
+  const animalLook = ignoreLooks ? animal : selectedLookLevel("animal", animal);
+  const quizLook = ignoreLooks ? quizLevel : selectedLookLevel("quiz", quizLevel);
   return {
-    hero: { key: "hero", level: heroLevel, src: heroAsset(heroLevel), name: "しゅじんこう" },
-    blue: { key: "blue", level: roma, src: buddyAsset(roma), name: "あおい あいぼう" },
-    red: { key: "red", level: word, src: redBuddyAsset(word), name: "あかい あいぼう" },
-    world: { key: "world", level: world, src: worldBuddyAsset(world), name: "せかいの あいぼう" },
-    animal: { key: "animal", level: animal, src: animalBuddyAsset(animal), name: "いきものの あいぼう" },
-    quiz: { key: "quiz", level: quizLevel, src: quizBuddyAsset(quizLevel), name: "なぞなぞの あいぼう" },
+    hero: { key: "hero", level: heroLook, src: heroAsset(heroLook), name: "しゅじんこう" },
+    blue: { key: "blue", level: blueLook, src: buddyAsset(blueLook), name: "あおい あいぼう" },
+    red: { key: "red", level: redLook, src: redBuddyAsset(redLook), name: "あかい あいぼう" },
+    world: { key: "world", level: worldLook, src: worldBuddyAsset(worldLook), name: "せかいの あいぼう" },
+    animal: { key: "animal", level: animalLook, src: animalBuddyAsset(animalLook), name: "いきものの あいぼう" },
+    quiz: { key: "quiz", level: quizLook, src: quizBuddyAsset(quizLook), name: "なぞなぞの あいぼう" },
   };
+}
+
+function selectedLookLevel(key, fallbackLevel) {
+  const value = state.looks?.[key] || "auto";
+  if (value === "auto") return fallbackLevel;
+  const info = lookInfo[key];
+  const option = info.options.find((item) => item.value === value);
+  if (!option || !lookUnlocked(key, option)) return fallbackLevel;
+  return option.level;
+}
+
+function lookUnlocked(key, option) {
+  if (option.allMax) return Object.values(state.levels).every((level) => level === MAX_LEVEL);
+  const needed = option.needs || 1;
+  return clampLevel(state.levels[lookInfo[key].subject]) >= needed;
 }
 
 function heroAsset(level) {
@@ -597,6 +697,35 @@ function renderHome() {
   document.getElementById("story-text").textContent = allMax
     ? "ぜんぶできた！さいごは、にこにこおじいちゃん。"
     : "すきなもんだいをえらんで、ぜんぶせいかいをめざそう。";
+}
+
+function renderLookPicker() {
+  const picker = document.getElementById("look-picker");
+  if (!picker) return;
+  picker.innerHTML = Object.entries(lookInfo).map(([key, info]) => {
+    const current = state.looks?.[key] || "auto";
+    const options = [
+      `<button class="look-choice ${current === "auto" ? "is-active" : ""}" data-look-key="${key}" data-look-value="auto">
+        <span class="look-name">おまかせ</span>
+      </button>`,
+      ...info.options.map((option) => {
+        const locked = !lookUnlocked(key, option);
+        return `
+          <button class="look-choice ${current === option.value ? "is-active" : ""}" data-look-key="${key}" data-look-value="${option.value}" ${locked ? "disabled" : ""}>
+            <img src="${info.asset(option.level)}" alt="" />
+            <span class="look-name">${option.label}</span>
+            <span class="look-lock">${locked ? "まだ" : "えらべる"}</span>
+          </button>
+        `;
+      }),
+    ].join("");
+    return `
+      <article class="look-row">
+        <h3>${info.label}</h3>
+        <div class="look-options">${options}</div>
+      </article>
+    `;
+  }).join("");
 }
 
 function renderSubjectPicker() {
@@ -874,7 +1003,7 @@ function nextQuestion() {
 function finishQuiz() {
   const clear = quiz.correct === QUESTIONS_PER_LEVEL;
   const feedback = document.getElementById("feedback");
-  const beforeAvatar = avatarSnapshot();
+  const beforeAvatar = progressSnapshot();
   document.getElementById("check-answer").hidden = true;
   document.getElementById("next-question").hidden = true;
   document.getElementById("answer-box").innerHTML = "";
@@ -901,7 +1030,7 @@ function finishQuiz() {
   }
   saveState();
   render();
-  if (clear) showEvolutionIfChanged(beforeAvatar, avatarSnapshot());
+  if (clear) showEvolutionIfChanged(beforeAvatar, progressSnapshot());
 }
 
 function ticketReward(level) {
@@ -1138,6 +1267,13 @@ document.addEventListener("click", (event) => {
   const level = event.target.closest("[data-level]");
   if (level) selectLevel(Number(level.dataset.level));
 
+  const look = event.target.closest("[data-look-key]");
+  if (look && !look.disabled) {
+    state.looks[look.dataset.lookKey] = look.dataset.lookValue;
+    saveState();
+    render();
+  }
+
   const choice = event.target.closest("[data-choice]");
   if (choice) {
     selectedChoice = choice.dataset.choice;
@@ -1158,6 +1294,11 @@ document.getElementById("next-level").addEventListener("click", () => {
   selectLevel(level);
 });
 document.getElementById("go-fishing").addEventListener("click", () => setView("fish"));
+document.getElementById("look-auto").addEventListener("click", () => {
+  state.looks = defaultLooks();
+  saveState();
+  render();
+});
 document.getElementById("close-evolution").addEventListener("click", () => {
   const modal = document.getElementById("evolution-modal");
   modal.classList.add("is-closing");
