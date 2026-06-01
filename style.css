@@ -853,6 +853,15 @@ h2 {
   height: auto;
 }
 
+.flag-picture {
+  width: min(260px, 76vw);
+  height: auto;
+  border: 4px solid #243447;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 0 rgba(36, 52, 71, 0.12);
+}
+
 .clock-face circle {
   fill: #fff8df;
   stroke: #243447;

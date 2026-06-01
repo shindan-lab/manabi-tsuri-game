@@ -92,32 +92,46 @@ const clockLevels = [
 
 const worldLevels = [
   [
-    qChoice("えいごで どれ？", "ねこ", ["cat", "dog", "fish", "bird"], "cat"),
-    qChoice("えいごで どれ？", "いぬ", ["dog", "cat", "sun", "book"], "dog"),
-    qChoice("えいごで どれ？", "さかな", ["fish", "milk", "pen", "rain"], "fish"),
-    qChoice("えいごで どれ？", "とり", ["bird", "car", "moon", "cake"], "bird"),
-    qChoice("えいごで どれ？", "りんご", ["apple", "orange", "banana", "grape"], "apple"),
+    qChoice("えいごの もじ", "えー は どれ？", ["A", "B", "C", "D"], "A"),
+    qChoice("えいごの もじ", "びー は どれ？", ["B", "A", "D", "E"], "B"),
+    qChoice("えいごの もじ", "しー は どれ？", ["C", "G", "A", "F"], "C"),
+    qChoice("えいごの もじ", "でぃー は どれ？", ["D", "B", "E", "C"], "D"),
+    qChoice("えいごの もじ", "いー は どれ？", ["E", "F", "A", "D"], "E"),
   ],
   [
-    qChoice("えいごで どれ？", "あか", ["red", "blue", "green", "yellow"], "red"),
-    qChoice("えいごで どれ？", "あお", ["blue", "red", "black", "white"], "blue"),
-    qChoice("えいごで どれ？", "みどり", ["green", "pink", "orange", "gray"], "green"),
-    qChoice("えいごで どれ？", "きいろ", ["yellow", "purple", "brown", "black"], "yellow"),
-    qChoice("えいごで どれ？", "しろ", ["white", "red", "blue", "green"], "white"),
+    qChoice("えいごの もじ", "えふ は どれ？", ["F", "E", "H", "A"], "F"),
+    qChoice("えいごの もじ", "じー は どれ？", ["G", "C", "J", "D"], "G"),
+    qChoice("えいごの もじ", "えいち は どれ？", ["H", "A", "F", "K"], "H"),
+    qChoice("えいごの もじ", "あい は どれ？", ["I", "L", "T", "E"], "I"),
+    qChoice("えいごの もじ", "じぇー は どれ？", ["J", "G", "I", "C"], "J"),
   ],
   [
-    qChoice("えいごで どれ？", "1", ["one", "two", "three", "four"], "one"),
-    qChoice("えいごで どれ？", "2", ["two", "one", "five", "ten"], "two"),
-    qChoice("えいごで どれ？", "3", ["three", "six", "seven", "nine"], "three"),
-    qChoice("えいごで どれ？", "4", ["four", "five", "one", "eight"], "four"),
-    qChoice("えいごで どれ？", "5", ["five", "two", "six", "ten"], "five"),
+    qChoice("えいごで どれ？", "ねこ", ["cat キャット", "dog ドッグ", "fish フィッシュ", "bird バード"], "cat キャット"),
+    qChoice("えいごで どれ？", "いぬ", ["dog ドッグ", "cat キャット", "sun サン", "book ブック"], "dog ドッグ"),
+    qChoice("えいごで どれ？", "さかな", ["fish フィッシュ", "milk ミルク", "pen ペン", "rain レイン"], "fish フィッシュ"),
+    qChoice("えいごで どれ？", "とり", ["bird バード", "car カー", "moon ムーン", "cake ケーキ"], "bird バード"),
+    qChoice("えいごで どれ？", "りんご", ["apple アップル", "orange オレンジ", "banana バナナ", "grape グレープ"], "apple アップル"),
   ],
   [
-    qChoice("どこの はた？", "🇯🇵", ["にほん", "アメリカ", "ブラジル", "フランス"], "にほん"),
-    qChoice("どこの はた？", "🇺🇸", ["アメリカ", "にほん", "イタリア", "インド"], "アメリカ"),
-    qChoice("どこの はた？", "🇫🇷", ["フランス", "ドイツ", "カナダ", "かんこく"], "フランス"),
-    qChoice("どこの はた？", "🇮🇹", ["イタリア", "スペイン", "イギリス", "にほん"], "イタリア"),
-    qChoice("どこの はた？", "🇧🇷", ["ブラジル", "アメリカ", "ドイツ", "インド"], "ブラジル"),
+    qChoice("えいごで どれ？", "あか", ["red レッド", "blue ブルー", "green グリーン", "yellow イエロー"], "red レッド"),
+    qChoice("えいごで どれ？", "あお", ["blue ブルー", "red レッド", "black ブラック", "white ホワイト"], "blue ブルー"),
+    qChoice("えいごで どれ？", "みどり", ["green グリーン", "pink ピンク", "orange オレンジ", "gray グレー"], "green グリーン"),
+    qChoice("えいごで どれ？", "きいろ", ["yellow イエロー", "purple パープル", "brown ブラウン", "black ブラック"], "yellow イエロー"),
+    qChoice("えいごで どれ？", "しろ", ["white ホワイト", "red レッド", "blue ブルー", "green グリーン"], "white ホワイト"),
+  ],
+  [
+    qChoice("えいごで どれ？", "1", ["one ワン", "two ツー", "three スリー", "four フォー"], "one ワン"),
+    qChoice("えいごで どれ？", "2", ["two ツー", "one ワン", "five ファイブ", "ten テン"], "two ツー"),
+    qChoice("えいごで どれ？", "3", ["three スリー", "six シックス", "seven セブン", "nine ナイン"], "three スリー"),
+    qChoice("えいごで どれ？", "4", ["four フォー", "five ファイブ", "one ワン", "eight エイト"], "four フォー"),
+    qChoice("えいごで どれ？", "5", ["five ファイブ", "two ツー", "six シックス", "ten テン"], "five ファイブ"),
+  ],
+  [
+    flagQ("jp", ["にほん", "アメリカ", "ブラジル", "フランス"], "にほん"),
+    flagQ("us", ["アメリカ", "にほん", "イタリア", "インド"], "アメリカ"),
+    flagQ("fr", ["フランス", "ドイツ", "カナダ", "かんこく"], "フランス"),
+    flagQ("it", ["イタリア", "スペイン", "イギリス", "にほん"], "イタリア"),
+    flagQ("br", ["ブラジル", "アメリカ", "ドイツ", "インド"], "ブラジル"),
   ],
   [
     qChoice("えいごで どれ？", "たいよう", ["sun", "moon", "star", "rain"], "sun"),
@@ -127,20 +141,6 @@ const worldLevels = [
     qChoice("えいごで どれ？", "ゆき", ["snow", "wind", "moon", "river"], "snow"),
   ],
   [
-    qChoice("えいごで どれ？", "ほん", ["book", "desk", "cup", "bag"], "book"),
-    qChoice("えいごで どれ？", "えんぴつ", ["pencil", "apple", "milk", "chair"], "pencil"),
-    qChoice("えいごで どれ？", "つくえ", ["desk", "book", "car", "ball"], "desk"),
-    qChoice("えいごで どれ？", "いす", ["chair", "bag", "pen", "fish"], "chair"),
-    qChoice("えいごで どれ？", "かばん", ["bag", "cup", "desk", "dog"], "bag"),
-  ],
-  [
-    qChoice("どこの はた？", "🇬🇧", ["イギリス", "フランス", "ドイツ", "カナダ"], "イギリス"),
-    qChoice("どこの はた？", "🇩🇪", ["ドイツ", "イタリア", "ブラジル", "にほん"], "ドイツ"),
-    qChoice("どこの はた？", "🇨🇦", ["カナダ", "アメリカ", "インド", "スペイン"], "カナダ"),
-    qChoice("どこの はた？", "🇰🇷", ["かんこく", "にほん", "ちゅうごく", "タイ"], "かんこく"),
-    qChoice("どこの はた？", "🇮🇳", ["インド", "カナダ", "ドイツ", "フランス"], "インド"),
-  ],
-  [
     qChoice("えいごで どれ？", "おはよう", ["good morning", "good night", "thank you", "hello"], "good morning"),
     qChoice("えいごで どれ？", "ありがとう", ["thank you", "sorry", "hello", "yes"], "thank you"),
     qChoice("えいごで どれ？", "こんにちは", ["hello", "bye", "no", "good night"], "hello"),
@@ -148,11 +148,11 @@ const worldLevels = [
     qChoice("えいごで どれ？", "はい", ["yes", "no", "bye", "sorry"], "yes"),
   ],
   [
-    qChoice("どこの はた？", "🇪🇸", ["スペイン", "イタリア", "ドイツ", "ブラジル"], "スペイン"),
-    qChoice("どこの はた？", "🇦🇺", ["オーストラリア", "カナダ", "アメリカ", "インド"], "オーストラリア"),
-    qChoice("どこの はた？", "🇹🇭", ["タイ", "かんこく", "にほん", "フランス"], "タイ"),
-    qChoice("どこの はた？", "🇲🇽", ["メキシコ", "スペイン", "ブラジル", "カナダ"], "メキシコ"),
-    qChoice("どこの はた？", "🇸🇪", ["スウェーデン", "ドイツ", "イギリス", "インド"], "スウェーデン"),
+    flagQ("gb", ["イギリス", "フランス", "ドイツ", "カナダ"], "イギリス"),
+    flagQ("de", ["ドイツ", "イタリア", "ブラジル", "にほん"], "ドイツ"),
+    flagQ("ca", ["カナダ", "アメリカ", "インド", "スペイン"], "カナダ"),
+    flagQ("kr", ["かんこく", "にほん", "ちゅうごく", "タイ"], "かんこく"),
+    flagQ("in", ["インド", "カナダ", "ドイツ", "フランス"], "インド"),
   ],
   [
     qChoice("えいごで どれ？", "みず", ["water", "milk", "juice", "tea"], "water"),
@@ -349,6 +349,10 @@ function qChoice(prompt, topic, choices, answer) {
   return { type: "choice", prompt, topic, choices, answer };
 }
 
+function flagQ(kind, choices, answer) {
+  return qChoice("どこの はた？", flagSvg(kind), choices, answer);
+}
+
 function clockQ(hour, minute, prompt = "この とけいは？", answerHour = hour, answerMinute = minute) {
   const answer = timeLabel(answerHour, answerMinute);
   return {
@@ -387,6 +391,22 @@ function timeChoices(hour, minute) {
 function wrapHour(hour) {
   const wrapped = ((hour - 1) % 12 + 12) % 12 + 1;
   return wrapped;
+}
+
+function flagSvg(kind) {
+  const flags = {
+    jp: `<rect width="180" height="108" fill="#fff"/><circle cx="90" cy="54" r="28" fill="#d22f3d"/>`,
+    us: `<rect width="180" height="108" fill="#fff"/><g fill="#c6283a"><rect y="0" width="180" height="12"/><rect y="24" width="180" height="12"/><rect y="48" width="180" height="12"/><rect y="72" width="180" height="12"/><rect y="96" width="180" height="12"/></g><rect width="76" height="60" fill="#244a91"/><g fill="#fff"><circle cx="16" cy="14" r="3"/><circle cx="36" cy="14" r="3"/><circle cx="56" cy="14" r="3"/><circle cx="26" cy="32" r="3"/><circle cx="46" cy="32" r="3"/><circle cx="16" cy="50" r="3"/><circle cx="36" cy="50" r="3"/><circle cx="56" cy="50" r="3"/></g>`,
+    fr: `<rect width="60" height="108" fill="#244a91"/><rect x="60" width="60" height="108" fill="#fff"/><rect x="120" width="60" height="108" fill="#d22f3d"/>`,
+    it: `<rect width="60" height="108" fill="#168a4a"/><rect x="60" width="60" height="108" fill="#fff"/><rect x="120" width="60" height="108" fill="#d22f3d"/>`,
+    br: `<rect width="180" height="108" fill="#169b62"/><path d="M90 16 164 54 90 92 16 54Z" fill="#f7d13d"/><circle cx="90" cy="54" r="25" fill="#244a91"/>`,
+    gb: `<rect width="180" height="108" fill="#224c9a"/><path d="M0 0 180 108M180 0 0 108" stroke="#fff" stroke-width="24"/><path d="M0 0 180 108M180 0 0 108" stroke="#d22f3d" stroke-width="10"/><path d="M90 0v108M0 54h180" stroke="#fff" stroke-width="34"/><path d="M90 0v108M0 54h180" stroke="#d22f3d" stroke-width="18"/>`,
+    de: `<rect width="180" height="36" fill="#222"/><rect y="36" width="180" height="36" fill="#d22f3d"/><rect y="72" width="180" height="36" fill="#f7d13d"/>`,
+    ca: `<rect width="180" height="108" fill="#fff"/><rect width="42" height="108" fill="#d22f3d"/><rect x="138" width="42" height="108" fill="#d22f3d"/><path d="M90 23 98 45 117 37 106 57 124 62 102 70 108 88 90 76 72 88 78 70 56 62 74 57 63 37 82 45Z" fill="#d22f3d"/>`,
+    kr: `<rect width="180" height="108" fill="#fff"/><path d="M90 30a24 24 0 1 1 0 48 12 12 0 1 0 0-24 12 12 0 1 1 0-24Z" fill="#d22f3d"/><path d="M90 78a24 24 0 1 1 0-48 12 12 0 1 0 0 24 12 12 0 1 1 0 24Z" fill="#244a91"/><g stroke="#222" stroke-width="5"><path d="M34 24h26M34 34h26M34 44h26M120 64h26M120 74h26M120 84h26M120 24h26M120 44h26M34 64h26M34 84h26"/></g>`,
+    in: `<rect width="180" height="36" fill="#f1993a"/><rect y="36" width="180" height="36" fill="#fff"/><rect y="72" width="180" height="36" fill="#168a4a"/><circle cx="90" cy="54" r="15" fill="none" stroke="#244a91" stroke-width="4"/><circle cx="90" cy="54" r="3" fill="#244a91"/>`,
+  };
+  return `<svg class="flag-picture" viewBox="0 0 180 108" role="img" aria-label="はた">${flags[kind]}</svg>`;
 }
 
 function clockSvg(hour, minute) {
